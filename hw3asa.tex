@@ -1,0 +1,175 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[font={small},labelfont={sf,bf}]{caption}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=2cm,right=2cm,heightrounded, bindingoffset=5mm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{ex}[definition]{Example}
+\theoremstyle{remark}
+\newtheorem{rem}[definition]{Remark}
+\newtheorem{rem*}[definition]{}
+
+\newcommand*\mcup{\mathbin{\mathpalette\mcupinn\relax}}
+\newcommand*\mcupinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcup$}}}
+\newcommand*\mcap{\mathbin{\mathpalette\mcapinn\relax}}
+\newcommand*\mcapinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcap$}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\parr}{(}{)}
+\DeclarePairedDelimiter{\parq}{[}{]}
+\DeclarePairedDelimiter{\parqq}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\bra}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\prodscal}{\langle}{\rangle}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\expval}{\mathbb{E}}
+\DeclareMathOperator*{\varval}{\mathrm{Var}}
+
+\begin{document}
+
+\title{Applied Stochastic Analysis \\ Homework assignment 3}
+\author{Luca Venturi}
+\maketitle
+
+\section*{Exercise 1}
+
+\paragraph*{(a)} Consider $P\in\mathbb{R}^{2\times 2}$ the transition matrix of this process. We know there exists a stationary distribution $\pi$. Now, if there exists another stationary distribution $\mu\neq\pi$, then $\pi,\mu$ are independent. Therefore they form a basis for $\mathbb{R}^2$ of $1$-eigenvectors of $P$, which implies that $P$ is similar to the identity matrix $I_2\in\mathbb{R}^{2\times 2}$. But the only matrix similar to $I_2$ is $I_2$ itself.
+Therefore, it follows that if $P\neq I_2$, then  the stationary distribution must be unique; $P=I_2$ is clearly the pathological case. It remains to show that $P$ is reversible with respect to $\pi$. To prove this, we only need to show that
+$\pi_1P_{12}=\pi_2P_{21}$. This suddenly follows:
+$$
+\pi_1P_{12}= \pi_1 - \pi_1P_{11} = \pi_1 - (\pi_1-\pi_2P_{21}) =\pi_2P_{21},   
+$$ 
+where we used that $P_{12}= 1-P_{11}$ and that $\pi_1=\pi_1P_{11}+\pi_2P_{21}$, being $\pi$ stationary.
+
+\paragraph*{(b)} Consider the $3\times 3$ transition matrix
+$$
+P = \parr*{\begin{matrix}
+0 & 2/3 & 1/3 \\ 1/3 & 0 & 2/3 \\ 2/3 & 1/3 & 0
+\end{matrix}}.
+$$
+Its stationary distribution is given by $\pi=(1/3,1/3,1/3)$ and $P$ is not reversible with respect to $\pi$, indeed:
+$$
+\pi_1P_{12} = \frac{1}{3}\cdot\frac{2}{3} = \frac{2}{9} \neq  \frac{1}{9} = \frac{1}{3}\cdot\frac{1}{3} = \pi_2P_{21}.  
+$$
+
+\section*{Exercise 2}
+
+The transition probabilities are given by $P = (P_{ij})_{i,j=0,\dots,N}$ such that
+$$
+P_{ij} = \left\lbrace\begin{array}{ll}
+i^2/N^2 & \text{if } j=i-1 \\
+2i(N-i)/N^2 & \text{if } j=i \\
+(N-i)^2/N^2 & \text{if } j=i+1 \\
+0 & \text{o.w.}
+\end{array}
+\right.
+$$
+One can verify that the stationary distribution is given by $\pi=(\pi_j)_{j=0,\dots,N}$ defined as $\pi_j=\binom{N}{j}^2\binom{2N}{N}^{-1}$. Indeed, if for example $j\in\bra{1,\dots,N-1}$, we have
+\begin{align*}
+\sum_{i=0}^N\pi_iP_{ij} & = \pi_{j-1}P_{j-1,j} + \pi_jP_{jj} + \pi_{j+1}P_{j+1,j} \\ & = \binom{2N}{N}^{-1}\parq*{\binom{N}{j-1}^2\frac{(N-j+1)^2}{N^2} + 2\binom{N}{j}^2\frac{j(N-j)}{N^2} + \binom{N}{j+1}^2\frac{(j+1)^2}{N^2}} \\ & = \frac{1}{N^2}\binom{2N}{N}^{-1}\parq*{j^2\binom{N}{j}^2+2j(N-j)\binom{N}{j}^2+(N-j)^2\binom{N}{j}^2} \\ & = \frac{1}{N^2}\binom{2N}{N}^{-1}\binom{N}{j}^2\parq*{j+(N-j)}^2 = \binom{N}{j}^2\binom{2N}{N}^{-1} = \pi_j.
+\end{align*}
+The equation above can be proved similarly for $j=0,N$. The chain is also reversible in equilibrium. Indeed it suffices to show that $\pi_iP_{i,i+1}=\pi_{i+1}P_{i+1,i}$ for $i=0,\dots,N-1$. This holds since:
+$$
+\pi_iP_{i,i+1} = \binom{2N}{N}^{-1}\frac{1}{N^2}\binom{N}{i}^2(N-i)^2 = \binom{2N}{N}^{-1}\frac{1}{N^2}\binom{N}{i+1}^2(i+1)^2 = \pi_{i+1}P_{i+1,i}.
+$$ 
+
+\section*{Exercise 3}
+
+It holds that:
+\begin{align*}
+\prodscal{Pu,v}_\pi & = \sum_i\pi_i(Pu)_iv_i = \prodscal{Pu,v}_\pi = \sum_i\pi_iv_i\sum_jP_{ij}u_j = \sum_ju_j\sum_i\pi_iP_{ij}v_i = \sum_ju_j\sum_i\pi_jP_{ji}v_i \\ & = \sum_j\pi_ju_j\sum_iP_{ji}v_i = \sum_j\pi_ju_j(Pv)_j = \prodscal{u,Pv}_\pi.
+\end{align*}
+
+\section*{Exercise 4}
+
+\paragraph*{(a)}
+
+First of all $\pi=(\pi_i)_i$, where $\pi_i=\frac{d_i}{\sum_k d_k}$ is the stationary distribution since
+$$
+\sum_i \pi_iP_{ij} = \sum_i \frac{d_i}{\sum_k d_k}\frac{w_{ij}}{d_i} = \frac{1}{\sum_k d_k}\sum_i w_{ij} = \frac{d_j}{\sum_k d_k} = \pi_j.
+$$
+Also, the transition matrix $P$ satisfies the detailed balance since
+$$
+\pi_iP_{ij} = \frac{d_i}{\sum_k d_k}\frac{w_{ij}}{d_i} = \frac{w_{ij}}{\sum_k d_k} = \frac{w_{ji}}{\sum_k d_k} = \frac{d_j}{\sum_k d_k}\frac{w_{ji}}{d_j} =\pi_jP_{ji}.
+$$
+
+\paragraph*{(b)} 
+
+The transition matrix $P$ has a full set of eigenvalues (i.e. it is similar to a diagonal real matrix) since it is similar to a symmetric matrix (and so spectral theorem applies). Indeed if $V=\Lambda P \Lambda^{-1}$, where $\Lambda = \mathrm{diag}(\sqrt{\pi_1},\dots,\sqrt{\pi_n})$, then $V$ is symmetric. Indeed, thank to detailed balance, it holds
+$$
+V_{ij} = \frac{\sqrt{\pi_i}}{\sqrt{\pi_j}}P_{ij} = \frac{\pi_i}{\sqrt{\pi_i\pi_j}}P_{ij} = \frac{\pi_j}{\sqrt{\pi_i\pi_j}}P_{ji} = \frac{\sqrt{\pi_j}}{\sqrt{\pi_i}}P_{ji} = V_{ji}.
+$$ 
+
+\paragraph*{(c)}
+
+Since $V=\Lambda P \Lambda^{-1}$ is symmetric we can write it as $V = O\Sigma O^T$, where $O=(w_1|\cdots|w_n)$ is an orthogonal matrix and $\Sigma = \mathrm{diag}(\lambda_1,\dots,\lambda_n)$ (i.e. $\lambda_i$ are the eigenvalues of $V$ and $w_i$ the respective eigenvectors). This is also equivalent to write $V=\sum_{k=1}^n\lambda_kw_kw_k^T$. From this we have that
+$$
+P^t = \Lambda^{-1}V^t\Lambda = \sum_{k=1}^n\lambda_k^t\,\Lambda^{-1}w_kw_k^T\Lambda = \sum_{k=1}^n\lambda_k^t\,\Lambda^{-1}w_kw_k^T\Lambda^{-1}\Lambda^2 = \sum_{k=1}^n\lambda_k^t\,\phi_k\phi_k^T\Lambda^2,
+$$
+where $\phi_k=\Lambda^{-1}w_k$ are the right eigenvectors of $P$. Now we can write 
+$$
+D^t(i,j) = (e_i^TP^t-e_j^TP^t)\,\Lambda^{-2}\,(e_i^TP^t-e_j^TP^t)^T = (e_i-e_j)^T\,P^t\Lambda^{-2}(P^t)^T\,(e_i-e_j).
+$$
+Since
+\begin{align*}
+P^t\Lambda^{-2}(P^t)^T & = \parr*{\sum_{k=1}^n\lambda_k^t\,\phi_k\phi_k^T\Lambda^2}\Lambda^{-2}\parr*{\sum_{j=1}^n\lambda_j^t\,\phi_j\phi_j^T\Lambda^2}^T \\ & = \sum_{j,k = 1}^n \lambda_k^t\lambda_j^t\phi_k\phi_k^T\Lambda^2\phi_j\phi_j^T = \sum_{j,k = 1}^n \lambda_k^t\lambda_j^t\phi_kw_k^Tw_j\phi_j^T = \sum_{j,k = 1}^n \lambda_k^t\lambda_j^t\phi_k\delta_{ij}\phi_j^T = \sum_{k = 1}^n \lambda_k^{2t}\phi_k\phi_k^T,
+\end{align*}
+we get that
+$$
+D^2_t(i,j) = (e_i-e_j)^T\parr*{\sum_{k = 1}^n \lambda_k^{2t}\phi_k\phi_k^T}(e_i-e_j) = \sum_{k=1}^n\lambda_k^{2t}((\phi_k)_i-(\phi_k)_j)^2.
+$$
+
+\section*{Exercise 5}
+
+Let's consider a distribution $\pi=(\pi_i)_i$ and a proposal probability matrix $H=(H_{ij})_{ij}$. We want to define an acceptance probability matrix $A=(A_{ij})_{ij}$ such that the transition probability matrix $P=(P_{ij})_{ij}$ defined as 
+$$
+P_{ij} = \left\lbrace\begin{array}{ll}
+A_{ij}H_{ij} & \text{if } i\neq j \\
+1 - \sum_kA_{ik}H_{ik} & \text{if } i=j
+\end{array}\right.
+$$ 
+is in detailed balance with $\pi$. Let $F:[0,+\infty]\to[0,1]$ be a function such that
+$F(z)=zF(1/z)$ for every $z\in[0,1]$ (note that every function $f:[0,1]\to[0,1]$ can be extended to such an $F$) and define $A$ as
+$$
+A_{ij} = F\parr*{\frac{\pi_jH_{ji}}{\pi_iH_{ij}}}.
+$$
+Note that, since
+$$
+\sum_{j\neq i} P_{ij} = \sum_{j\neq i} H_{ij}A_{ij} \leq \sum_{j\neq i} H_{ij} \leq 1,
+$$
+then $P$ defined above is a stochastic matrix. Moreover it is in detailed balance with $\pi$, indeed:
+\begin{align*}
+\pi_iP_{ij} & = \pi_iH_{ij}A_{ij} = \pi_iH_{ij}F\parr*{\frac{\pi_jH_{ji}}{\pi_iH_{ij}}} = \pi_jH_{ji}\frac{\pi_iH_{ij}}{\pi_jH_{ji}}F\parr*{\frac{\pi_jH_{ji}}{\pi_iH_{ij}}} \\ & = \pi_jH_{ji}\parr*{\frac{\pi_iH_{ij}}{\pi_jH_{ji}}} = \pi_jH_{ji}A_{ji} = \pi_jP_{ji}.
+\end{align*}
+With this method we can find a whole family of acceptance probability matrices. In particular the standard Metropolis-Hastings algorithm is obtained taking 
+$F(z)=\min\bra{1,z}$.
+
+\end{document}

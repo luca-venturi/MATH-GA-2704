@@ -1,0 +1,150 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[font={small},labelfont={sf,bf}]{caption}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=2cm,right=2cm,heightrounded, bindingoffset=5mm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{ex}[definition]{Example}
+\theoremstyle{remark}
+\newtheorem{rem}[definition]{Remark}
+\newtheorem{rem*}[definition]{}
+
+\newcommand*\mcup{\mathbin{\mathpalette\mcupinn\relax}}
+\newcommand*\mcupinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcup$}}}
+\newcommand*\mcap{\mathbin{\mathpalette\mcapinn\relax}}
+\newcommand*\mcapinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcap$}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\parr}{(}{)}
+\DeclarePairedDelimiter{\parq}{[}{]}
+\DeclarePairedDelimiter{\parqq}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\bra}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\prodscal}{\langle}{\rangle}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\expval}{\mathbb{E}}
+\DeclareMathOperator*{\varval}{\mathrm{Var}}
+\DeclareMathOperator*{\covval}{\mathrm{Cov}}
+
+\begin{document}
+
+\title{Applied Stochastic Analysis \\ Homework assignment 5}
+\author{Luca Venturi}
+\maketitle
+
+\section*{Exercise 1}
+
+If $t_1,\dots,t_n\in\mathbb{R}$, $B = (B(t_i,t_j))_{1\leq i,j\leq n}$ and $\mathbf{v}=(v_1,\dots,v_n)\in\mathbb{R}^n$, then
+\begin{align*}
+\mathbf{v}^tB\mathbf{v} & = \sum_{i,j=1}^n v_iB(t_i,t_j)v_j = \sum_{i,j=1}^n v_i\expval\parq{X_{t_i}X_{t_j}}v_j = \sum_{i,j=1}^n \expval\parq{v_iX_{t_i}v_jX_{t_j}} \\ & = \sum_{i=1}^n \expval\Big[v_iX_{t_i}\Big(\sum_{j=1}^nv_jX_{t_j}\Big)\Big] =  \expval\Big[\Big(\sum_{j=1}^nv_jX_{t_j}\Big)^2\Big] \geq 0
+\end{align*}
+This proves that $B(s,t)$ is a positive semi-definite function.
+
+\section*{Exercise 2}
+
+Since we want to generate $(X_t)_t$ only for $t=t_1,\dots,t_m$, then consider $B = (B(t_i,t_j))_{1\leq i,j\leq m}$. Let $K$ be the matrix in the Cholesky decomposition of $B$, i.e., $B=KK^t$. We first generate a sample of $\mathbf{Y}=(Y_1,\dots,Y_m)\sim N(\mathbf{0}, I_m)$: this can be done simply generating independently $Y_i\sim N(0,1)$, $i=1,\dots,m$. If we consider $\mathbf{X}=K\mathbf{Y}$, then $X_1,\dots,X_m$ are samples from the desired distribution (i.e., that of $X_{t_!},\dots,X_{t_m}$). Indeed $\mathbf{X}\sim N(\mathbf{0},B)$ since
+$$
+\covval(\mathbf{X}) = \expval\parq{\mathbf{X}\mathbf{X}^t} = K\expval\parq{\mathbf{Y}\mathbf{Y}^t}K^t = K I_m K^t = KK^t = B.
+$$
+
+
+\section*{Exercise 3}
+
+If $N=(N_t)_t$ is a Poisson process, then, for every $0<t_1<\dots<t_n$, $N_{t_1},N_{t_2}-N_{t_1},\dots,N_{t_n}-N_{t_{n-1}}$ are independent and the distribution of $N_{t_2}-N_{t_1}$ only depends on $t_2-t_1$.
+ 
+\section*{Exercise 4}
+
+\paragraph*{(a)}
+
+Since $\bra{\xi_n}_n$ are uncorrelated, we have 
+$$
+\expval{X_n} = \mu\sum_{i=1}^ma_i \qquad \text{and} \qquad \varval(X_n) =  \sigma^2\sum_{i=1}^ma_i^2.
+$$ 
+Moreover, since $X_n$ depends only on $\xi_n,\dots,\xi_{n-m+1}$, if $\abs{n-k}\geq m$ then $X_n$ and $X_k$ are uncorrelated. Otherwise suppose $n\geq k$ and $l = n-k<m$. Then
+\begin{align*}
+\covval(X_n,X_k) & = \covval\big(\sum_{i=1}^m a_i\xi_{n-i+1},\sum_{j=1}^m a_j\xi_{k-j+1}\big)  \\ & = \covval\big(\sum_{i=1}^l a_i\xi_{n-i+1}+\sum_{i=l+1}^m a_i\xi_{n-i+1},\sum_{j=1}^{m-l} a_j\xi_{k-j+1}+\sum_{j=m-l+1}^m a_j\xi_{k-j+1}\big) \\ & = \covval\big(\sum_{i=l+1}^m a_i\xi_{n-i+1},\sum_{j=1}^{m-l} a_j\xi_{k-j+1}\big) = \covval\big(\sum_{i=1}^{m-l} a_{i+l}\xi_{k-i+1},\sum_{j=1}^{m-l} a_j\xi_{k-j+1}\big) \\ & =
+\sigma^2\sum_{i=1}^{m-l} a_{i+l}a_i.
+\end{align*}
+Therefore we can write, for every $n,k \in \mathbb{Z}$,
+$$
+\covval(X_n,X_k)=\sigma^2\mathbbm{1}_{\bra{\abs{n-k}<m}}\sum_{i=1}^{m-\abs{n-k}} a_{i+\abs{n-k}}a_i.
+$$
+
+\paragraph*{(b)}
+
+In the case $a_k=1/\sqrt{m}$ for $k=1,\dots,m$ the covariance function is 
+$$
+\covval(X_n,X_k)=\sigma^2\mathbbm{1}_{\bra{\abs{n-k}<m}}\frac{m-\abs{n-k}}{m}.
+$$
+If $m=1$ then $(X_n)_n$ are uncorrelated and their variance is $\varval(X_n) = \sigma^2$. If $m\to\infty$ then
+$$
+\covval(X_n,X_k) \to \sigma^2 \qquad \text{for every $n,k\in\mathbb{Z}$}.
+$$
+This implies that for every $n,k\in\mathbb{Z}$
+$$
+\expval\parq{(X_n-X_k)^2}=0,
+$$
+i.e., $X_n=X_0$ a.s. for every $n\in\mathbb{Z}$.
+
+\section*{Exercise 5}
+
+\paragraph*{(a)}
+
+The condition in the exercise is sufficient to mean-square differentiability because it's basically Cauchy condition for $L^2$ convergence. Now, it holds that
+\begin{multline*}
+\expval\abs*{\frac{X_{t+h}-X_t}{h}-\frac{X_{t+h'}-X_t}{h'}}^2  = \expval\abs*{\frac{X_{t+h}-X_t}{h}}^2 + \expval\abs*{\frac{X_{t+h'}-X_t}{h'}}^2 - 2\expval\abs*{\frac{X_{t+h}-X_t}{h}\frac{X_{t+h'}-X_t}{h'}} \\  = 2\frac{C(0)-C(h)}{h^2} + 2\frac{C(0)-C(h')}{(h')^2} -2\frac{C(h'-h)-C(h')-C(h)+C(0)}{hh'}.
+\end{multline*}
+Now
+$$
+2\frac{C(0)-C(h)}{h^2} = \frac{-C(-h)+2C(0)-C(h)}{h^2} \to -C''(0)
+$$
+as $h\to 0$, and similarly 
+$$
+2\frac{C(0)-C(h')}{(h')^2}\to -C''(0)
+$$
+as $h'\to 0$, if $C$ has continuous second derivative in a neighborhood of the origin. Moreover
+\begin{align*}
+\lim_{h\to0}\lim_{h'\to0}\frac{C(h'-h)-C(h')-C(h)+C(0)}{hh'} & = \lim_{h\to0}\frac{1}{h}\parq*{\lim_{h'\to0}\frac{C(h'-h)-C(h)}{h'}+\lim_{h'\to0}\frac{C(0)-C(h')}{h'}} \\ & = \lim_{h\to0}\frac{C'(-h)-C'(0)}{h} = - C''(0).
+\end{align*}
+Therefore
+$$
+\lim_{h\to0,\,h'\to0}\expval\abs*{\frac{X_{t+h}-X_t}{h}-\frac{X_{t+h'}-X_t}{h'}}^2 = -2C''(0) + 2C''(0) = 0.
+$$
+
+\paragraph*{(b)}
+ 
+If $C$ is $C^2$, it holds that
+$$
+\expval\parq*{\frac{X_{s+t+h}-X_{s+t}}{h}\frac{X_{s+h}-X_s}{h}} =-\frac{C(t+h)-2C(t) + C(t-h)}{h^2} \to -C''(t)
+$$ 
+as $h\to0$. (This implies that $-C''(t)$ is the covariance function of $X_t'$ because of the mean-square differentiability of $X_t$).
+ 
+\end{document}
