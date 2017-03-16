@@ -1,0 +1,136 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[font={small},labelfont={sf,bf}]{caption}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=2cm,right=2cm,heightrounded, bindingoffset=5mm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{ex}[definition]{Example}
+\theoremstyle{remark}
+\newtheorem{rem}[definition]{Remark}
+\newtheorem{rem*}[definition]{}
+
+\newcommand*\mcup{\mathbin{\mathpalette\mcupinn\relax}}
+\newcommand*\mcupinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcup$}}}
+\newcommand*\mcap{\mathbin{\mathpalette\mcapinn\relax}}
+\newcommand*\mcapinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcap$}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\parr}{(}{)}
+\DeclarePairedDelimiter{\parq}{[}{]}
+\DeclarePairedDelimiter{\parqq}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\bra}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\prodscal}{\langle}{\rangle}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\expval}{\mathbb{E}}
+\DeclareMathOperator*{\varval}{\mathrm{Var}}
+\DeclareMathOperator*{\covval}{\mathrm{Cov}}
+
+\begin{document}
+
+\title{Applied Stochastic Analysis \\ Homework assignment 6}
+\author{Luca Venturi}
+\maketitle
+
+\section*{Exercise 1}
+
+\paragraph*{(a)}
+
+First, note that if $N\sim \mathrm{Poi}(\lambda)$, then 
+$$
+\expval\parq{N_t} = \lambda t, \qquad \expval\parq{N_t^2} = \lambda t(1+\lambda t) \qquad \text{and} \qquad \expval\parq{X_t} = \lambda (t+\alpha) - \lambda t = \lambda \alpha.
+$$
+Moreover
+\begin{align*}
+\covval(N_t,N_s) & = \expval\parq{N_tN_s} - \expval\parq{N_t}\expval\parq{N_s} = \expval\parq{(N_{t\vee s}-N_{t\wedge s})N_{t\wedge s}} + \expval\parq{N_{t\wedge s}^2} - \expval\parq{N_t}\expval\parq{N_s} \\ & = \expval\parq{N_{t\vee s}-N_{t\wedge s}}\expval\parq{N_{t\wedge s}} + \expval\parq{N_{t\wedge s}^2} - \expval\parq{N_t}\expval\parq{N_s} = \expval\parq{N_{t\wedge s}^2} -\expval\parq{N_{t\wedge s}}^2 = \lambda ({t\wedge s}).
+\end{align*}
+Since $X$ is strongly stationary, its covariance function is given by
+$$
+C(t) = \covval(X_{\abs{t}},X_0) = \covval(N_{\abs{t}+\alpha}-N_{\abs{t}},N_\alpha) = \lambda(\alpha-\abs{t}\wedge\alpha) = \lambda(\alpha-\abs{t})\mathbbm{1}_{\bra{\abs{t}\leq\alpha}}.
+$$
+Since $C\in L^1(\mathbb{R})$, the spectral density exists and its given by its Fourier transform:
+$$
+f(\xi) = \frac{1}{2\pi}\int_\mathbb{R} \lambda(\alpha-\abs{t})\mathbbm{1}_{\bra{\abs{t}\leq\alpha}}e^{-i\xi t}dt = \frac{\lambda}{\pi} \frac{1-\cos \alpha\xi}{\xi^2}.
+$$
+
+\paragraph*{(b)}
+
+Since $W$ is a Brownian motion, then 
+$$
+\expval\parq{W_t} = \expval\parq{X_t} = 0, \qquad \text{and} \qquad \expval\parq{W_tW_s} =  s\wedge t.
+$$
+Hence the covariance function of $X$ is given by
+\begin{align*}
+C(t) & = \expval\parq{X_{\abs{t}+s}X_s} = \expval\parq{(W_{\abs{t}+\alpha}-W_{\abs{t}})(W_{s+\alpha}-W_s)} \\ & = (\alpha + \abs{t}\wedge s) - \abs{t}\wedge(s+\alpha) - s\wedge(\abs{t}+\alpha) + \abs{t}\wedge s = (\alpha-\abs{t})\mathbbm{1}_{\bra{\abs{t}\leq\alpha}}
+\end{align*}
+As in the part (a), the spectral density exists and its given by its Fourier transform:
+$$
+f(\xi) = \frac{1}{2\pi}\int_\mathbb{R} (\alpha-\abs{t})\mathbbm{1}_{\bra{\abs{t}\leq\alpha}}e^{-i\xi t}dt = \frac{1-\cos \alpha\xi}{\pi\xi^2}.
+$$
+
+\section*{Exercise 2}
+
+\paragraph*{(a)}
+
+Using the notation on the notes, we have that the spectral representation of $X$ is 
+$$
+X_t = \int_\mathbb{R} e^{i\xi t}\,dZ(\xi).
+$$
+Derivating under the integral sign, we get the spectral representation of $X'$:
+$$
+X_t' = \int_\mathbb{R} e^{i\xi t}\,i\xi dZ(\xi).
+$$
+Its covariance function is given by
+\begin{align*}
+C_{X'}(t) & = \expval\parq{X_{t+s}'\overline{X_s'}} = \expval\parq*{\int_{\mathbb{R}^2} e^{i\xi (t+s)}e^{-i\xi's}\,\xi\xi'dZ(\xi)\overline{dZ(\xi')}} \\ & = \int_{\mathbb{R}^2} e^{i\xi (t+s)}e^{-i\xi's}\,\xi\xi'\expval\parq*{dZ(\xi)\overline{dZ(\xi')}} = \int_{\mathbb{R}^2} e^{i\xi (t+s)}e^{-i\xi's}\,\xi\xi'\delta(\xi-\xi')dF(\xi)d\xi' \\ & = \int_\mathbb{R} e^{i\xi t}\,\xi^2 dF(\xi) = -\frac{d^2}{dt^2}\int_\mathbb{R} e^{i\xi t}\,dF(\xi) = -\frac{d^2}{dt^2}C(t).
+\end{align*}
+(This confirms what found in exercise 5 of homework 5).
+
+\paragraph*{(b)}
+ 
+It holds that
+\begin{align*}
+C_{X,X'}(t) & = \expval\parq{X_{t+s}\overline{X_s'}} = -i\expval\parq*{\int_{\mathbb{R}^2} e^{i\xi (t+s)}e^{-i\xi's}\,\xi'dZ(\xi)\overline{dZ(\xi')}} \\ & = -i\int_{\mathbb{R}^2} e^{i\xi (t+s)}e^{-i\xi's}\,\xi'\expval\parq*{dZ(\xi)\overline{dZ(\xi')}} = -i\int_{\mathbb{R}^2} e^{i\xi (t+s)}e^{-i\xi's}\,\xi'\delta(\xi-\xi')dF(\xi)d\xi' \\ & = -i\int_\mathbb{R} e^{i\xi t}\,\xi dF(\xi) = -\frac{d}{dt}\int_\mathbb{R} e^{i\xi t}\,dF(\xi) = -\frac{d}{dt}C(t).
+\end{align*} 
+
+\paragraph*{(c)}
+
+For every $t\in\mathbb{R}$ it holds
+$$
+\expval\parq{X_{t}\overline{X_t'}} = C_{X,X'}(0) = -C'(0).
+$$
+Since it is constant, its derivative is zero.
+
+\paragraph*{(d)}
+
+A sufficient condition is that $X$ is a $C^{2n}$ process.
+ 
+\end{document}
