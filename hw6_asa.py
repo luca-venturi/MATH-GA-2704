@@ -8,7 +8,7 @@ def C0(x): return complex(2.*np.exp(-np.abs(x)))
 def C1(x): return complex(2.*np.exp(-x**2/2))
 def C2(x): return complex(2.*float(np.abs(x) <= 1))
 
-L = 100
+L = 20
 N = L*20
 
 x = np.array([complex(i*L/N) for i in range(N)])
@@ -25,7 +25,7 @@ def estimate_covariance_ft(C_vec):
 		for n in range(N):
 			A = np.random.normal(loc=0.0, scale=1.0)
 			B = np.random.normal(loc=0.0, scale=1.0)
-			phi.append((A+B*1.j)*np.sqrt(L*dft_C[n]/2))
+			phi.append((A+B*1.j)*np.sqrt(L*dft_C[n]*0.5))
 		phi = np.array(phi)
 		X[:,i] = np.real(np.fft.ifft(phi)*(N/L))
 
