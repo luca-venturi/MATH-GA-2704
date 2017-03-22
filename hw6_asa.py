@@ -50,7 +50,7 @@ def estimate_covariance_ft(C_vec_tilde):
 
 	return np.cov(X)[0,:], X[:,0]
 
-# This function operates using the method using DFT as described in HW 6
+# This function operates using the method using Choleski as described in HW 5
 
 def estimate_covariance_chol(C_vec):
 	
@@ -70,7 +70,7 @@ def estimate_covariance_chol(C_vec):
 
 	return np.cov(X)[0,:], X[:,0]
 
-# We apply the above functions to the covariance function C0, C1, C2
+# We apply the above functions to the covariance function C0, C1, C2 and we plot the results
 
 # C0
 
