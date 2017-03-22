@@ -15,29 +15,12 @@ x = np.array([complex(i*L/N) for i in range(N)])
 
 # We define functions to estimate covariance, using the DFT method and the Choleski method. They also return a realization of the random field
 
-"""
-def estimate_covariance_ft(C_vec):
-	
-	dft_C = np.fft.fft(C_vec)*(L/N)
-	it = 1000
-	X = np.zeros((N,it))
-	for i in range(it):
-		phi = np.zeros((N), dtype=complex)
-		for n in range(N):
-			A = np.random.normal(loc=0.0, scale=1.0)
-			B = np.random.normal(loc=0.0, scale=1.0)
-			phi[n] = (A+B*1.j)*np.sqrt(L*dft_C[n]*0.5)
-		X[:,i] = np.real(np.fft.ifft(phi))*(N/L)
-
-	return np.cov(X)[0,:], X[:,0]
-"""
-
 # This function operates using the method using DFT as described in HW 6
 
 def estimate_covariance_ft(C_vec_tilde):
 	
 	N_tilde = 2*N-2
-	invdft_C_tilde = np.fft.ifft(C_vec_tilde)*N_tilde
+	invdft_C_tilde = np.fft.ifft(C_vec_tilde)
 	it = 10000
 	X = np.zeros((N,it))
 	for i in range(it):
@@ -46,7 +29,7 @@ def estimate_covariance_ft(C_vec_tilde):
 			A = np.random.normal(loc=0.0, scale=1.0)
 			B = np.random.normal(loc=0.0, scale=1.0)
 			phi[n] = (A+B*1.j)*np.sqrt(invdft_C_tilde[n])
- 		X[:,i] = np.real(np.fft.fft(phi)[:N])/np.sqrt(N_tilde)
+ 		X[:,i] = np.real(np.fft.fft(phi)[:N])
 
 	return np.cov(X)[0,:], X[:,0]
 
