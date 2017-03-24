@@ -1,0 +1,174 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[font={small},labelfont={sf,bf}]{caption}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=2cm,right=2cm,heightrounded, bindingoffset=5mm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{ex}[definition]{Example}
+\theoremstyle{remark}
+\newtheorem{rem}[definition]{Remark}
+\newtheorem{rem*}[definition]{}
+
+\newcommand*\mcup{\mathbin{\mathpalette\mcupinn\relax}}
+\newcommand*\mcupinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcup$}}}
+\newcommand*\mcap{\mathbin{\mathpalette\mcapinn\relax}}
+\newcommand*\mcapinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcap$}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\parr}{(}{)}
+\DeclarePairedDelimiter{\parq}{[}{]}
+\DeclarePairedDelimiter{\parqq}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\bra}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\expval}{\mathbb{E}}
+\DeclareMathOperator*{\varval}{\mathrm{Var}}
+
+\begin{document}
+
+\title{Applied Stochastic Analysis \\ Homework assignment 2}
+\author{Luca Venturi}
+\maketitle
+
+\section*{Exercise 1}
+
+Neither (b) or (e) are Markov chains. Instead, (a), (c) and (d) are Markov chains and their transition matrices are, respectively:
+\begin{enumerate}
+\item[(a)] $P^a= (P^a_{ij})_{ij\in S_a}$, where $S_a=\parqq{1,6}$ and 
+$$
+P^a_{ij} = \left\{ \begin{array}{ll}
+0 & \text{if } j < i \\
+j/6 & \text{if } j = i \\
+1/6 & \text{if } j > i
+\end{array}\right. ,
+$$
+\item[(c)] $P^c= (P^c_{ij})_{ij\in S_c}$, where $S_c=\mathbb{N}$ and 
+$$
+P^c_{ij} = \left\{ \begin{array}{ll}
+5/6 & \text{if } j = i \\
+1/6 & \text{if } j = i+1 \\
+0 & \text{o.w.}
+\end{array}\right. ,
+$$ 
+\item[(d)] $P^d= (P^d_{ij})_{ij\in S_d}$, where $S_d=\mathbb{N}$ and 
+$$
+P^d_{ij} = \left\{ \begin{array}{ll}
+5/6 & \text{if } j = i+1 \\
+1/6 & \text{if } j = 0 \\
+0 & \text{o.w.}
+\end{array}\right. . 
+$$ 
+\end{enumerate} 
+
+\section*{Exercise 2}
+
+\paragraph*{(a)}
+
+Let $E=(e_{ij})_{ij\in G}$ be the adjacency matrix of $G$, i.e., $e_{ij}=1$ if the vertex $i,j$ of $G$ are connected and $e_{ij}=0$ otherwise (note that $E$ is symmetric). The transition matrix is given by $P = (P_{ij})_{ij\in G}$ such that $P_{ij} = e_{ij}/d_i$, where $d_i$ is the degree of the $i$-th vertex, i.e., $d_i = \sum_{j\in G}e_{ij}$. Note that if $\eta$ is the number of edges of $G$, it holds $2\eta=\sum_{i\in G}d_i$. Also it holds that $P_{ii}=0$ for every $i\in G$ since $G$ has no loops and $P$ is irreducible since $G$ is connected. In particular this implies that there exists only one stationary distribution. This is indeed given by $\pi = (\pi_i)_{i\in G}$ such that $\pi_i = d_i/(2\eta)$, since
+$$
+\sum_{j\in G} \pi_jP_{ji} = \frac{1}{2\eta}\sum_{j\in G} d_j\frac{e_{ji}}{d_j} = \frac{1}{2\eta}\sum_{j\in G} e_{ij} = \frac{d_i}{2\eta} = \pi_i, \qquad \text{for every } i\in G,
+$$ 
+i.e., $\pi P=\pi$.
+
+\paragraph*{(b)}
+
+We can reformulate this problem as a random walk on a connected graph $G$, taking $G$ as the set of squares on the chessboard; two squares are connected if we can go from one to the other with a knight move. Since the chain is irreducible (and thus also recurrent, since $G$ is finite) it holds that, if $N_i(t)=\sum_{k=0}^t\mathbbm{1}_{\bra{X_k=i}}$ is the amount of time that the knight spends in square $i$ in the period $\parqq{0,t}$, then a.s.
+$$
+\frac{1}{t}N_i(t) \to \pi_i, \qquad \text{as } t\to\infty,
+$$
+where $\pi = (\pi_i)_{i\in G}$ is the unique stationary distribution. We are now interested to the case $i$ is a corner square. In this case, by (a), $\pi_i=2/(2\eta)$. 
+A by hand calculation shows that $\sum_{i\in G} d_i = 336$, so we get $\pi_i = 1/168$. Therefore, for $T\gg1$ we have
+$$
+\frac{N_i(T)}{T} \simeq \frac{1}{168}.
+$$
+
+\section*{Exercise 3}
+
+The easiest one is given by a Markov chain on the state space $S=\bra{0,1}$ with transition matrix 
+$$
+I_2 = \begin{bmatrix}
+1 & 0 \\ 0 & 1
+\end{bmatrix}
+$$ 
+In this case indeed all the initial distributions are stationary.  
+
+\section*{Exercise 4}
+
+Supposing that $T\geq n+1$, then we have, for every $i\in S$:
+\begin{align*}
+u_{n,i} & = \expval\parq{V(X_T)\,|\,X_n=i} = \sum_{k\in S} V(k)\mathbb{P}\bra{X_T=k\,|\,X_n=i} \\ & = \sum_{k\in S} V(k)\sum_{j\in S}\mathbb{P}\bra{X_T=k\,|\,X_{n+1}=j}\mathbb{P}\bra{X_{n+1}=j\,|\,X_n=i} \\ & = \sum_{j\in S} \mathbb{P}\bra{X_{n+1}=j\,|\,X_n=i} \sum_{k\in S} V(k)\mathbb{P}\bra{X_T=k\,|\,X_{n+1}=j} = \sum_{j\in S} P_{n,ij}u_{n+1,j}.
+\end{align*}
+This exactly means that $u_n = P_nu_{n+1}$.
+
+\section*{Exercise 5}
+
+If $i\notin A$, $j\in A$, we have:
+\begin{align*}
+G_{ij} & = \mathbb{P}\bra{X_{T_A}=j\,|\,X_0=i} = \mathbb{P}\bra{X_1=j\,|\,X_0=i} + \mathbb{P}\bra{X_{T_A}=j,T_A>1\,|\,X_0=i} \\ & = P_{ij} + \sum_{l\notin A} \mathbb{P}\bra{X_{T_A}=j,X_1=l\,|\,X_0=i} = P_{ij} + \sum_{l\notin A} \mathbb{P}\bra{X_{T_A}=j\,|\,X_1=l,X_0=i}P_{il} \\ & = P_{ij} + \sum_{l\notin A} G_{lj}P_{il},
+\end{align*}
+where we used that:
+\begin{align*}
+\mathbb{P}\bra{X_{T_A}=j\,|\,X_1=l,X_0=i} & = \sum_{n\geq2} \mathbb{P}\bra{X_n=j,X_{n-1}\notin A,\dots,X_2\notin A\,|\,X_1=l,X_0=i} \\ & = \sum_{n\geq2} \mathbb{P}\bra{X_n=j,X_{n-1}\notin A,\dots,X_2\notin A\,|\,X_1=l}  \\ & = \sum_{n\geq2} \mathbb{P}\bra{X_{n-1}=j,X_{n-2}\notin A,\dots,X_1\notin A\,|\,X_0=l} \\ & = \sum_{n\geq1} \mathbb{P}\bra{X_n=j,X_{n-1}\notin A,\dots,X_1\notin A\,|\,X_0=l} \\ & = \mathbb{P}\bra{X_{T_A}=j\,|\,X_0=l} = G_{lj}.
+\end{align*}
+
+\section*{Exercise 6}
+
+Let $n<N$. Then we have that, for every $i_0,\dots,i_{n+1}\in S$:
+\begin{align*}
+\mathbb{P}\bra{Y_{n+1}=i_{n+1}\,|\,Y_n=i_n,\dots,Y_0=i_0} & = \mathbb{P}\bra{X_{N-n-1}=i_{n+1}\,|\,X_{N-n}=i_n,\dots,X_N=i_0} \\
+& = \frac{\mathbb{P}\bra{X_{N-n-1}=i_{n+1},X_{N-n}=i_n,\dots,X_N=i_0}}{\mathbb{P}\bra{X_{N-n}=i_n,\dots,X_N=i_0}} \\ & = 
+\frac{\pi_{i_{n+1}}P_{i_{n+1}i_n}P_{i_ni_{n-1}}\cdots P_{i_1i_0}}{\pi_{i_n}P_{i_ni_{n-1}}\cdots P_{i_1i_0}} = 
+\frac{\pi_{i_{n+1}}}{\pi_{i_n}}P_{i_{n+1}i_n} \\ & = \frac{\mathbb{P}\bra{X_{N-n-1}=i_{n+1},X_{N-n}=i_n}}{\mathbb{P}\bra{X_{N-n}=i_n}} \\ & = \mathbb{P}\bra{X_{N-n-1}=i_{n+1}\,|\,X_{N-n}=i_n} \\ & = \mathbb{P}\bra{Y_{n+1}=i_{n+1}\,|\,Y_n=i_n}.
+\end{align*}
+This shows that $\bra{Y_n}_{0\leq n\leq N}$ is a Markov chain with the desired transition matrix.
+
+\section*{Exercise 7}
+
+I uploaded the \texttt{python} script to solve parts (a), (b) and (c) to the NYU Classes webpage.
+
+\paragraph*{(a)-(b)}
+
+The average time to hit the top row is 
+$$
+\mathbb{E}_1\parq{T_\mathrm{tr}} \simeq 7.895.
+$$
+The probabilities of hitting the top row at, respectively, squares $7,8,9$ are:
+\begin{align*}
+\mathbb{P}_1\bra{X_{T_\mathrm{tr}} = 7} & \simeq 0.442, \\
+\mathbb{P}_1\bra{X_{T_\mathrm{tr}} = 8} & \simeq 0.316, \\
+\mathbb{P}_1\bra{X_{T_\mathrm{tr}} = 9} & \simeq 0.242.
+\end{align*}
+
+\paragraph*{(c)-(d)}
+
+The first method (a) (i.e. find the mean first-passage time by solving a linear system) for calculating the mean first-passage time shows to perform better than the second one (c) (i.e. simulate the Markov chain $M$ times and estimate the mean first-passage time from the simulations), both in terms of efficiency and accuracy. Indeed method (c) requires much more time to run with respect to method (a), since it has to run $M$ simulation (I used $M=10^4$); also, by running the script diverse times, we see that method (c) gives us always a slightly different result (the difference being of order $10^{-2}$), while method (a) always gives the same result obviously. This remains true if we increase the dimension of the $n\times n$ grid up to $n=20$. For higher $n$ the script requires too much time to run (at least on my pc). It could be however that for very high $n$ the linear system is numerically unstable, and in that case, method (c) could be better. 
+
+\end{document}
