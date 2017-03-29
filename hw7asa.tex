@@ -72,6 +72,48 @@ The above concludes the proof that $\mathbf{Y}_t = (Y^1_t,\dots,Y^d_t)$ is a $d$
 
 \paragraph*{(a)}
 
+First of all, we notice that, by definition of that $T_a$, $\tilde{B}_t$ is a.s. continuous. Hence, to show that $\tilde{B}_t$ is a B.m. (Brownian motion), it is sufficient to show that
+$$
+P(\tilde{B}_s \leq x, \tilde{B}_t \leq y) = P(B_s \leq x, B_t \leq y)
+$$
+for every $0\leq s\leq t$ and $x,y\in\mathbb{R}$ (i.e. that $(\tilde{B}_t,\tilde{B}_s)$ and $(B_t,B_s)$ have the same distribution). Let $\mathcal{F}_t= \sigma(B_s: 0\leq s \leq t)$. By the strong Markov property, we know that $W_t \doteq B_{t+T_a} - B_{T_a}$ is a B.m. independent by $\mathcal{F}_{T_a}$. Notice that 
+$$
+\tilde{W}_t \doteq \tilde{B}_{t+T_a} - \tilde{B}_{T_a} = 2a - B_{t+T_a} - B_{T_a} = B_{T_a} - B_{t+T_a} = -W_t,
+$$
+so $\tilde{W}_t$ is a B.m. independent by $\mathcal{F}_{T_a}$ too. We can write
+\begin{align*}
+B_t = B_t\mathbbm{1}_{\bra{t\leq T_a}} + (W_{t-T_a} + B_{T_a})\mathbbm{1}_{\bra{t> T_a}} \qquad \text{and} \qquad \tilde{B}_t = B_t\mathbbm{1}_{\bra{t\leq T_a}} + (\tilde{W}_{t-T_a} + B_{T_a})\mathbbm{1}_{\bra{t> T_a}}.
+\end{align*}
+Now 
+\begin{align}
+P(\tilde{B}_s \leq x, \tilde{B}_t \leq y) & = P(B_s \leq x, B_t \leq y, t\leq T_a) + P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) \notag \\ & + P(\tilde{W}_{t-T_a} + B_{T_a} \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, T_a<s). \label{ex2:1}
+\end{align}
+We can evaluate the second term in the rhs as follows:
+\begin{align*}
+P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) & = \expval\parq{P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y\,|\,\mathcal{F}_{T_a})\mathbbm{1}_{\bra{s\leq T_a<t}}}, 
+\end{align*}
+where
+$$
+P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y\,|\,\mathcal{F}_{T_a}) = \tilde{f}(B_s,T_a)
+$$
+with
+$$
+\tilde{f}(z,r) \doteq \mathbbm{1}_{\bra{z \leq x}} P(\tilde{W}_{t-r} + a \leq y) = \mathbbm{1}_{\bra{z \leq x}} P(W_{t-r} + a \leq y) \doteq f(z,r).
+$$
+Hence
+\begin{align}
+P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) & = \expval\parq{f(B_s,T_a))\mathbbm{1}_{\bra{s\leq T_a<t}}} \notag \\ & = P(B_s \leq x, W_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t).\label{ex2:2} 
+\end{align}
+Similarly one can prove that
+\begin{equation}
+P(\tilde{W}_{t-T_a} + B_{T_a} \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, T_a<s) = P(W_{t-T_a} + B_{T_a} \leq x, W_{t-T_a} + B_{T_a} \leq y, T_a<s) \label{ex2:3}.
+\end{equation}
+From (\ref{ex2:1}), (\ref{ex2:2}) and (\ref{ex2:3}) one gets that
+\begin{align*}
+P(\tilde{B}_s \leq x, \tilde{B}_t \leq y) & = P(B_s \leq x, B_t \leq y, t\leq T_a) + P(B_s \leq x, W_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) \\ & + P(W_{t-T_a} + B_{T_a} \leq x, W_{t-T_a} + B_{T_a} \leq y, T_a<s) \\ &  = P(B_s \leq x, B_t \leq y).
+\end{align*}
+This completes the proof that $\tilde{B}_t$ is a B.m.
+
 \paragraph*{(b)}
 
 It holds that
