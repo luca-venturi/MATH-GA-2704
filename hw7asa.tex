@@ -62,7 +62,7 @@
 
 \section*{Exercise 1}
 
-Since every $Y_t^i$, $i=1,\dots,d$, is a linear combination of continuous independent (centered) Gaussian processes then every $Y_t^i$ is a (centered) Gaussian process too. Hence, we only need to examine its covariance function. We have
+Since every $Y_t^i$, $i=1,\dots,d$, is a linear combination of continuous independent (centered) Gaussian processes then every $Y_t^i$ is a continuous (centered) Gaussian process too. Hence, we only need to examine its covariance function. We have
 \begin{align*}
 \expval\parq{Y^i_sY^j_t} & = \sum_{k=1}^d\sum_{n=1}^d Q_{ik}Q_{jn}\expval\parq{W^k_sW^n_t} = (s\wedge t)\sum_{k=1}^d\sum_{n=1}^d Q_{ik}Q_{jn}\delta_{kn} \\ & = (s\wedge t)\sum_{k=1}^dQ_{ik}Q_{jk} = (s\wedge t)(Q\cdot Q^t)_{ij} = (s\wedge t)\delta_{ij}.
 \end{align*}
@@ -86,7 +86,7 @@ B_t = B_t\mathbbm{1}_{\bra{t\leq T_a}} + (W_{t-T_a} + B_{T_a})\mathbbm{1}_{\bra{
 \end{align*}
 Now 
 \begin{align}
-P(\tilde{B}_s \leq x, \tilde{B}_t \leq y) & = P(B_s \leq x, B_t \leq y, t\leq T_a) + P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) \notag \\ & + P(\tilde{W}_{t-T_a} + B_{T_a} \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, T_a<s). \label{ex2:1}
+P(\tilde{B}_s \leq x, \tilde{B}_t \leq y) & = P(B_s \leq x, B_t \leq y, t\leq T_a) + P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) \notag \\ & + P(\tilde{W}_{s-T_a} + B_{T_a} \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, T_a<s). \label{ex2:1}
 \end{align}
 We can evaluate the second term in the rhs as follows:
 \begin{align*}
@@ -102,15 +102,15 @@ $$
 $$
 Hence
 \begin{align}
-P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) & = \expval\parq{f(B_s,T_a))\mathbbm{1}_{\bra{s\leq T_a<t}}} \notag \\ & = P(B_s \leq x, W_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t).\label{ex2:2} 
+P(B_s \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) & = \expval\parq{f(B_s,T_a)\mathbbm{1}_{\bra{s\leq T_a<t}}} \notag \\ & = P(B_s \leq x, W_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t).\label{ex2:2} 
 \end{align}
 Similarly one can prove that
 \begin{equation}
-P(\tilde{W}_{t-T_a} + B_{T_a} \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, T_a<s) = P(W_{t-T_a} + B_{T_a} \leq x, W_{t-T_a} + B_{T_a} \leq y, T_a<s) \label{ex2:3}.
+P(\tilde{W}_{s-T_a} + B_{T_a} \leq x, \tilde{W}_{t-T_a} + B_{T_a} \leq y, T_a<s) = P(W_{s-T_a} + B_{T_a} \leq x, W_{t-T_a} + B_{T_a} \leq y, T_a<s) \label{ex2:3}.
 \end{equation}
 From (\ref{ex2:1}), (\ref{ex2:2}) and (\ref{ex2:3}) one gets that
 \begin{align*}
-P(\tilde{B}_s \leq x, \tilde{B}_t \leq y) & = P(B_s \leq x, B_t \leq y, t\leq T_a) + P(B_s \leq x, W_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) \\ & + P(W_{t-T_a} + B_{T_a} \leq x, W_{t-T_a} + B_{T_a} \leq y, T_a<s) \\ &  = P(B_s \leq x, B_t \leq y).
+P(\tilde{B}_s \leq x, \tilde{B}_t \leq y) & = P(B_s \leq x, B_t \leq y, t\leq T_a) + P(B_s \leq x, W_{t-T_a} + B_{T_a} \leq y, s\leq T_a<t) \\ & + P(W_{s-T_a} + B_{T_a} \leq x, W_{t-T_a} + B_{T_a} \leq y, T_a<s) \\ &  = P(B_s \leq x, B_t \leq y).
 \end{align*}
 This completes the proof that $\tilde{B}_t$ is a B.m.
 
@@ -139,7 +139,27 @@ $$
 
 \section*{Exercise 3}
 
-
+Let
+$$
+Y^n_t = \frac{1}{\sqrt{n}}S_{\floor{nt}} + \frac{1}{\sqrt{n}}(nt - \floor{nt})X_{\floor{nt}+1}.
+$$
+By Donkser's theorem it holds that $Y^n\Rightarrow B$ as $n\to\infty$, where $Y^n = (Y^n_t)_{t\geq0}$ and $B = (B_t)_{t\geq0}$ is a B.m. In particular this implies that
+\begin{equation}\label{ex3}
+\sup_{t\in [0,1]} Y^n_t \quad\Rightarrow\quad M_1 = \sup_{t\in[0,1]} B_t
+\end{equation}
+as $n\to\infty$. We notice that
+\begin{align*}
+\sup_{t\in [0,1]} Y^n_t & = \frac{1}{\sqrt{n}}\sup_{t\in[0,1]}(S_{\floor{nt}} + (nt - \floor{nt})X_{\floor{nt}+1}) \\ & = \frac{1}{\sqrt{n}}\sup\bra{S_i + tX_{i+1}, i=0,\dots,n-1, t\in[0,1], S_n} = \frac{1}{\sqrt{n}}\sup_{i=0,\dots,n}S_n = \frac{1}{\sqrt{n}}G_n.
+\end{align*}
+Therefore, (\ref{ex3}) tells us that (heuristically), for $n$ large, $G_n$ is distributed as $\sqrt{n}M_1$. Noticing that exercise 2 tells us that $\sqrt{n}M_1 \sim \sqrt{n}\abs{B_1}$, we can (heuristically) say that
+$$
+\expval\parq{G_n} \simeq \expval\parq{\sqrt{n}\abs{B_1}} = \sqrt{\frac{2}{\pi n}}\int_0^\infty xe^{-x^2/2n}\,dx =\sqrt{\frac{2n}{\pi}}
+$$
+and
+$$
+\varval(G_n) = \expval\parq{G_n^2} - \expval\parq{G_n}^2 \simeq n\expval\parq{B_1^2} - \frac{2n}{\pi} =  n\parr*{1-\frac{2}{\pi}}
+$$
+for $n$ large.
 
 \section*{Exercise 4}
 
