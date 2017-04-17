@@ -78,7 +78,7 @@ as $|\sigma|\to0$.
 
 We consider 
 \begin{align*}
-\sum_j\frac{1}{2}(W_{j+1}+W_j)\Delta W_j - \sum_jW_{j+1/2}\Delta W_j & = \frac{1}{2}\sum_j(W_{j+1}-2W_{j+1/2}+W_j)\Delta W_j \\ & = \frac{1}{2}\sum_j(W_{j+1}-W_{j+1/2})^2 -\frac{1}{2}\sum_j(W_{j+1/2}-W_j)^2
+\sum_j\frac{1}{2}(W_{j+1}+W_j)\Delta W_j - \sum_jW_{j+1/2}\Delta W_j & = \frac{1}{2}\sum_j(W_{j+1}-2W_{j+1/2}+W_j)\Delta W_j \\ & = \frac{1}{2}\sum_j(W_{j+1}-W_{j+1/2})^2 -\frac{1}{2}\sum_j(W_{j+1/2}-W_j)^2.
 \end{align*}
 Now 
 \begin{align*}
@@ -116,13 +116,13 @@ Now
 \end{align*}
 which implies that
 \begin{equation}\label{ex:1.c1}
-- \sum_jW_j(\Delta W_j)^2 \quad\xrightarrow{L^2}\quad -\int_0^t W(s)\,ds.
+- \sum_jW_j(\Delta W_j)^2 \quad\xrightarrow{L^2}\quad -\int_0^t W(s)\,ds
 \end{equation}
-Also
+as $|\sigma|\to0$. Also
 \begin{align*}
 \mathbb{E}\Big[\Big(\sum_j(W_{j+1}-W_j)^3\Big)^2\Big] & = \sum_{i,j}\mathbb{E}[(W_{i+1}-W_i)^3(W_{j+1}-W_j)^3] = \sum_{j}\mathbb{E}[(W_{j+1}-W_j)^6] \\ & = 15\sum_j(t_{j+1}-t_j)^3 \leq 15|\sigma|^2t \quad\rightarrow\quad 0 
 \end{align*}
-as $|\sigma|\to0$, i.e.
+as $|\sigma|\to0$, which implies that
 \begin{equation}\label{ex:1.c2}
 -\frac{1}{3}\sum_j(W_{j+1}-W_j)^3 \quad\xrightarrow{L^2}\quad 0
 \end{equation}
@@ -169,12 +169,28 @@ $$
 
 If $Y_t = \sin W_t$ then
 $$
-dY_t = \cos W_t\,dW_t-\frac{1}{2}\sin W_t (dW_t)^2 = \cos W_t\,dW_t-\frac{1}{2}\sin W_t\,dt.
+dY_t = \cos W_t\,dW_t-\frac{1}{2}\sin W_t (dW_t)^2 = -\frac{1}{2}\sin W_t\,dt + \cos W_t\,dW_t.
 $$
 
 \paragraph*{(c)}
 
-??
+If $X_t = a\cos W_t$, $Y_t = b\sin W_t$ ($ab\neq 0$) then
+\begin{align*}
+dX_t & = -a\sin W_t\,dW_t-\frac{a}{2}\cos W_t\,(dW_t)^2 = -\frac{1}{2}X_t\,dt -\frac{a}{b}Y_t\,dW_t, \\
+dY_t & = b\cos W_t\,dW_t -\frac{b}{2}\sin W_t\,(dW_t)^2 = -\frac{1}{2}Y_t\,dt + \frac{b}{a}X_t\,dW_t. 
+\end{align*}
+We can write this as
+$$
+d\left(\begin{matrix}
+X_t \\ Y_t
+\end{matrix}\right) = -\frac{1}{2}\left(\begin{matrix}
+X_t \\ Y_t
+\end{matrix}\right)\,dt + \left(\begin{matrix}
+0 & -a/b \\ b/a & 0
+\end{matrix}\right)\left(\begin{matrix}
+X_t \\ Y_t
+\end{matrix}\right)\,dW_t.
+$$
 
 \section*{Exercise 4}
 

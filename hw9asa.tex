@@ -1,0 +1,167 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[font={small},labelfont={sf,bf}]{caption}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=2cm,right=2cm,heightrounded, bindingoffset=5mm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{ex}[definition]{Example}
+\theoremstyle{remark}
+\newtheorem{rem}[definition]{Remark}
+\newtheorem{rem*}[definition]{}
+
+\newcommand*\mcup{\mathbin{\mathpalette\mcupinn\relax}}
+\newcommand*\mcupinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcup$}}}
+\newcommand*\mcap{\mathbin{\mathpalette\mcapinn\relax}}
+\newcommand*\mcapinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcap$}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\parr}{(}{)}
+\DeclarePairedDelimiter{\parq}{[}{]}
+\DeclarePairedDelimiter{\parqq}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\bra}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\prodscal}{\langle}{\rangle}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\expval}{\mathbb{E}}
+\DeclareMathOperator*{\varval}{\mathrm{Var}}
+\DeclareMathOperator*{\covval}{\mathrm{Cov}}
+
+\begin{document}
+
+\title{Applied Stochastic Analysis \\ Homework assignment 9}
+\author{Luca Venturi}
+\maketitle
+
+\section*{Exercise 1}
+
+\paragraph*{(a)}
+
+$$
+dX_t = \parr*{aX_t + \frac{1}{2}b^2X_t} \,dt + bX_t\,dB_t. 
+$$
+
+\paragraph*{(b)}
+
+$$
+dX_t = \frac{1}{2}\parr*{\sin X_t\cos X_t - t^2\sin X_t} \,dt + (t^2 + \cos X_t)\,dB_t. 
+$$
+
+\paragraph*{(c)}
+
+$$
+dX_t = \parr*{r-\frac{1}{2}\alpha^2}X_t\,dt + \alpha X_t\circ dB_t. 
+$$
+
+\paragraph*{(d)}
+
+$$
+dX_t = \parr*{2e^{-X_t} - X_t^3}\,dt + X_t^2\circ dB_t.
+$$
+
+\section*{Exercise 2}
+
+\paragraph*{(a)}
+
+By It\^o formula we have 
+$$
+d(X^n_t) = \parr*{\lambda n + \frac{1}{2}n(n-1)\sigma^2}X^n_t\,dt + X^n_t\,dW_t,
+$$
+i.e.
+$$
+X_t^n = x_0^n + \int_0^t \parr*{\lambda n  + \frac{1}{2}n(n-1)\sigma^2}X^n_s\,ds + \sigma n \int_0^t X^n_s\,dW_s.
+$$
+Taking the expectation we get
+$$
+M_n(t) = \expval X_t^n = \expval x_0^n + \int_0^t \parr*{\lambda n  + \frac{1}{2}n(n-1)\sigma^2}M_n(s)\,ds.
+$$
+The above formula is equivalent to say that $M_n$ satisfies the equation
+$$
+\frac{dM_n}{dt} = \parr*{\lambda n +\frac{\sigma^2}{2}n(n-1)}M_n, \qquad M_n(0) = \expval x_0^n.
+$$
+
+\paragraph*{(b)}
+
+$$
+M_n(t) = \parr*{\expval x_0^n}\,e^{n(\lambda + \sigma^2(n-1)/2)t}
+$$
+
+\paragraph*{(c)}
+
+It must be 
+$$
+\lambda + \frac{\sigma^2}{2}(n-1) < 0, \qquad \text{i.e.} \qquad \lambda < - \frac{\sigma^2}{2}(n-1).
+$$
+
+\paragraph*{(d)}
+
+\section*{Exercise 5}
+
+It is sufficient to show that $dY_t = 0$, where $Y_t \doteq X_{1,t}^2+X_{2,t}^2$. Indeed, according to multidimensional Ito formula, it holds:
+\begin{align*}
+dY_t & = 2X_{1,t}\,dX_{1,t} + 2X_{2,t}\,dX_{2,t} + (dX_{1,t})^2 + (dX_{1,t})^2 = 2X_{1,t}(X_{2,t}^2\circ dW_{1,t}) 
+\end{align*}
+
+\section*{Exercise 7}
+
+\paragraph*{(a)}
+
+The equation means
+$$
+X_t = \xi + \int_0^ts\,ds + 2\int_0^tdB_s = \xi + \frac{t^2}{2} + 2B_t.
+$$
+This implies $\expval X_t = t^2/2$.
+
+\paragraph*{(b)}
+
+If we multiply both sides by $e^{\cos t}$, we get
+$$
+d(e^{\cos t}X_t) = e^{\cos t}\,dX_t - (\sin t)e^{\cos t}X_t\,dt = e^{\cos t}\,dB_t,
+$$
+which gives
+\begin{align*}
+X_t & = \xi\,e^{(1-\cos t)} + e^{-\cos t}\int_0^te^{\cos s}\,dB_s  \\ & = \xi\,e^{(1-\cos t)} + e^{-\cos t}\int_0^td\parr*{e^{\cos s}B_s} -e^{-\cos t}\int_0^t(\sin s)B_s\,e^{\cos s}\,ds \\ & = \xi\,e^{(1-\cos t)} + B_t -e^{-\cos t}\int_0^t(\sin s)B_s\,e^{\cos s}\,ds.
+\end{align*}
+In particular $\expval X_t = 0$.
+
+\paragraph*{(c)}
+
+If we multiply both sides by $e^t$, we get
+$$
+d(e^tX_t) = e^t\,dX_t + e^tX_t\,dt = e^tdt + e^tdB_t,
+$$
+which gives
+\begin{align*}
+X_t & = \xi e^{-t} + e^{-t}\int_0^se^sds + e^{-t}\int_0^te^sdB_s
+= \xi e^{-t} + 1 - e^{-t} + e^{-t}\int_0^td(e^sB_s) - e^{-t}\int_0^t e^sB_s\,ds \\ & = e^{-t}(\xi -1) + 1 + B_t - e^{-t}\int_0^t e^sB_s\,ds.
+\end{align*}
+In particular $\expval X_t = 1$.
+
+\end{document}
