@@ -62,6 +62,8 @@
 
 \section*{Exercise 1}
 
+Using the formula to transform an It\^o SDE into a Stratonovich one (or viceversa) we get:
+
 \paragraph*{(a)}
 
 $$
@@ -103,14 +105,15 @@ $$
 M_n(t) = \expval X_t^n = \expval x_0^n + \int_0^t \parr*{\lambda n  + \frac{1}{2}n(n-1)\sigma^2}M_n(s)\,ds.
 $$
 The above formula is equivalent to say that $M_n$ satisfies the equation
-$$
+\begin{equation}\label{ex2:ode}
 \frac{dM_n}{dt} = \parr*{\lambda n +\frac{\sigma^2}{2}n(n-1)}M_n, \qquad M_n(0) = \expval x_0^n.
-$$
+\end{equation}
 
 \paragraph*{(b)}
 
+The solution to equation (\ref{ex2:ode}) is 
 $$
-M_n(t) = \parr*{\expval x_0^n}\,e^{n(\lambda + \sigma^2(n-1)/2)t}
+M_n(t) = \parr*{\expval x_0^n}\,e^{n(\lambda + \sigma^2(n-1)/2)t}.
 $$
 
 \paragraph*{(c)}
@@ -122,18 +125,158 @@ $$
 
 \paragraph*{(d)}
 
+One just need to take $N = \inf\bra{n\geq1\,:\,\lambda+\sigma^2(n-1)/2>0}$.
+
+\section*{Exercise 3}
+
+\paragraph*{(a)}
+
+Suppose that $X_t$ satisfies the SDE 
+\begin{equation}
+\begin{cases} dX_t = a(X_t)\,dY_t \\ dY_t = b(X_t)\,dW_t \end{cases}
+\label{ex3a:sys}
+\end{equation}
+The terms in the Riemann sums for (\ref{ex3a:sys}) are
+$$
+\begin{cases} \Delta_j X  = a(X_j)\Delta_j Y \\  \Delta_j Y = b(X_j)\Delta_j W \end{cases} \quad\Longrightarrow\quad \Delta_j X = a(X_j)b(X_j)\Delta_j W.
+$$
+So the above gives 
+$$
+dX_t = (a(X_t)b(X_t))\,dW_t.
+$$
+
+\paragraph*{(b)}
+
+Suppose that $X_t$ satisfies the SDE 
+\begin{equation}
+\begin{cases} dX_t = a(X_t)\,dY_t \\ dY_t = b(X_t)\circ dW_t \end{cases}
+\label{ex3b:sys}
+\end{equation}
+and that this implies
+\begin{equation} 
+\label{ex3b:ito}
+dX_t = \alpha(X_t)\,dt + \beta(X_t)\,dW_t
+\end{equation}
+for some functions $\alpha$, $\beta$.
+The terms in the Riemann sums for (\ref{ex3b:sys}) are
+\begin{equation}
+\begin{cases} \Delta_j X  = a(X_j)\Delta_j Y \\  \Delta_j Y = \frac{1}{2}(b(X_j)+b(X_{j+1}))\Delta_j W \end{cases} \label{ex3b:dis_sys}
+\end{equation}
+Now, using (\ref{ex3b:ito}), we have
+$$
+b(X_{j+1}) = b(X_j) + b'(X_j)\Delta_j X \quad\Longrightarrow\quad b(X_{j+1})\Delta_jW = b(X_j)\Delta_jW + b'(X_j)\beta(X_j)\Delta_jt,
+$$
+and thus from (\ref{ex3b:dis_sys}) we get
+$$
+\Delta_j X = \frac{1}{2}a(X_j)b'(X_j)\beta(X_j)\Delta_j t + a(X_j)b(X_j)\Delta_jW 
+$$
+Comparing the above with (\ref{ex3b:ito}), we get that $X$ must satisfy:
+$$
+dX_t = \frac{1}{2}a^2(X_t)b(X_t)b'(X_t)\,dt + a(X_t)b(X_t)\,dW_t.
+$$
+
+\paragraph*{(c)}
+
+Suppose that $X_t$ satisfies the SDE 
+\begin{equation}
+\begin{cases} dX_t = a(X_t)\circ dY_t \\ dY_t = b(X_t)\,dW_t \end{cases}
+\label{ex3c:sys}
+\end{equation}
+and that this implies
+\begin{equation} 
+\label{ex3c:ito}
+dX_t = \alpha(X_t)\,dt + \beta(X_t)\,dW_t
+\end{equation}
+for some functions $\alpha$, $\beta$.
+The terms in the Riemann sums for (\ref{ex3c:sys}) are
+\begin{equation}
+\begin{cases} \Delta_j X  = \frac{1}{2}(a(X_j)+a(X_{j+1}))\Delta_j Y \\  \Delta_j Y = b(X_j)\Delta_j W \end{cases} \label{ex3c:dis_sys}
+\end{equation}
+Now, using (\ref{ex3c:ito}), we have
+$$
+a(X_{j+1}) = a(X_j) + a'(X_j)\Delta_j X \quad\Longrightarrow\quad a(X_{j+1})\Delta_jW = a(X_j)\Delta_jW + a'(X_j)\beta(X_j)\Delta_jt,
+$$
+and thus from (\ref{ex3c:dis_sys}) we get
+$$
+\Delta_j X = \frac{1}{2}a'(X_j)b(X_j)\beta(X_j)\Delta_j t + a(X_j)b(X_j)\Delta_jW 
+$$
+Comparing the above with (\ref{ex3c:ito}), we get that $X$ must satisfy:
+$$
+dX_t = \frac{1}{2}a(X_t)a'(X_t)b^2(X_t)\,dt + a(X_t)b(X_t)\,dW_t.
+$$
+
+\paragraph*{(d)}
+
+Suppose that $X_t$ satisfies the SDE 
+\begin{equation}
+\begin{cases} dX_t = a(X_t)\circ dY_t \\ dY_t = b(X_t)\circ dW_t \end{cases}
+\label{ex3d:sys}
+\end{equation}
+and that this implies
+\begin{equation} 
+\label{ex3d:ito}
+dX_t = \alpha(X_t)\,dt + \beta(X_t)\,dW_t
+\end{equation}
+for some functions $\alpha$, $\beta$.
+The terms in the Riemann sums for (\ref{ex3c:sys}) are
+\begin{equation}
+\begin{cases} \Delta_j X  = \frac{1}{2}(a(X_j)+a(X_{j+1}))\Delta_j Y \\  \Delta_j Y = \frac{1}{2}(b(X_j)+b(X_{j+1}))\Delta_j W \end{cases} \label{ex3d:dis_sys}
+\end{equation}
+Now, using (\ref{ex3d:ito}), we have
+$$
+a(X_{j+1}) = a(X_j) + a'(X_j)\Delta_j X, \qquad b(X_{j+1}) = b(X_j) + b'(X_j)\Delta_j X ,
+$$
+and thus from (\ref{ex3d:dis_sys}) we get
+\begin{align*}
+\Delta_j X & = \frac{1}{4}(a(X_j)+a(X_{j+1}))(b(X_j)+b(X_{j+1}))\Delta_jW \\ & = \frac{1}{4}(2a(X_j)+a'(X_j)\beta(X_j)\Delta_jW)(2b(X_j)+b'(X_j)\beta(X_j)\Delta_jW)\Delta_jW \\ & = \frac{1}{2}(a\cdot b)'(X_j)\beta(X_j)\Delta_jt + a(X_j)b(X_j)\Delta_jW
+\end{align*}
+Comparing the above with (\ref{ex3d:ito}), we get that $X$ must satisfy:
+$$
+dX_t = \frac{1}{2}(a\cdot b)(X_t)(a\cdot b)'(X_t)\,dt + a(X_t)b(X_t)\,dW_t.
+$$
+
+\section*{Exercise 4}
+
+Be $Y_t = f(X_t)$ and suppose that $dX_t = \alpha(X_t)\,dt + \beta(X_t)\circ dW_t$. Then
+$$
+dX_t = (\alpha(X_t)+\frac{1}{2}\beta(X_t)\beta'(X_t))dt + \beta(X_t)\,dW_t
+$$
+and so, by It\^o formula
+\begin{align}
+dY_t & = f'(X_t)\,dX_t + \frac{1}{2}f''(X_t)(dX_t)^2 \notag\\ & = \parq*{\alpha(X_t)f'(X_t) +\frac{1}{2}\beta(X_t)\beta'(X_t)f'(X_t) + \frac{1}{2}\beta(X_t)^2f''(X_t)}dt + \beta(X_t)f'(X_t)\,dW_t \notag\\ & = \parq*{\alpha(X_t)f'(X_t) +\frac{1}{2}\beta(X_t)(\beta\cdot f')'(X_t)}dt + \beta(X_t)f'(X_t)\,dW_t. \label{ex:4}
+\end{align}
+If $g = f^{-1}$, $h = f'$, $\hat{\alpha} = \alpha\circ g$, $\hat{\beta} = \beta\circ g$ and $\hat{h} = h\circ g$,  then using the change of variable $y=f(x)$ (which we can do locally) (\ref{ex:4}) becomes
+\begin{align*}
+dY_t & = \parq*{\hat{\alpha}(Y_t)\hat{h}(Y_t)+\frac{1}{2}\hat{\beta}(Y_t)\hat{h}(Y_t)\frac{d}{dy}(\hat{\beta}\cdot\hat{h})(Y_t)}dt + \hat{\beta}(Y_t)\hat{h}(Y_t)\,dW_t \\ & = \hat{\alpha}(Y_t)\hat{h}(Y_t)\,dt + \hat{\beta}(Y_t)\hat{h}(Y_t)\circ dW_t \\ & = \hat{h}(Y_t)\parq*{\hat{\alpha}(Y_t)\,dt + \hat{\beta}(Y_t)\circ dW_t} \\ & = h(X_t)\parq*{\alpha(X_t)\,dt + \beta(X_t)\circ dW_t} = h(X_t) \circ  dX_t,
+\end{align*}
+i.e. $d(f(X_t)) = f'(X_t)\circ dX_t$.
+
 \section*{Exercise 5}
 
-It is sufficient to show that $dY_t = 0$, where $Y_t \doteq X_{1,t}^2+X_{2,t}^2$. Indeed, according to multidimensional Ito formula, it holds:
+It is sufficient to show that $dY_t = 0$, where $Y_t \doteq X_{1,t}^2+X_{2,t}^2$. Indeed, using the result from Exercise 4, it holds:
 \begin{align*}
-dY_t & = 2X_{1,t}\,dX_{1,t} + 2X_{2,t}\,dX_{2,t} + (dX_{1,t})^2 + (dX_{1,t})^2 = 2X_{1,t}(X_{2,t}^2\circ dW_{1,t}) 
+dY_t &  = d(X_{1,t}^2) + d(X_{2,t}^2) = 2X_{1,t}\circ dX_{1,t} + 2X_{2,t}\circ dX_{2,t} \\ & = \frac{1}{\abs{X_t}^2}\parq*{2X_{1,t}(X_{2,t}^2\circ dW_{1,t}-X_{1,t}X_{2,t}\circ dW_{2,t}) + 2X_{2,t}(-X_{1,t}X_{2,t}\circ dW_{1,t} + X_{1,t}^2\circ dW_{2,t})} \\ & = \frac{1}{\abs{X_t}^2}\parq*{(2X_{1,t}X_{2,t}^2 - 2X_{1,t}X_{2,t}^2)\circ dW_{1,t} + (2X_{1,t}^2X_{2,t} - 2X_{1,t}^2X_{2,t})\circ dW_{2,t}} = 0.
 \end{align*}
+
+\section*{Exercise 6}
+
+\paragraph*{(a)}
+
+The spectral form of the SDE is
+$$
+i\xi \hat{X}_\xi = -\alpha\hat{X}_\xi + \sigma\hat{\eta}_\xi \quad\Longrightarrow\quad \hat{X}_\xi = \frac{\sigma}{\alpha+i\xi}\cdot\hat{\eta}_\xi
+$$
+where $\hat{X}_\xi = dZ_X(\xi)$, $\hat{\eta}_\xi = dZ_\eta(\xi)$ ($\eta$ is a Gaussian process with mean $0$ and covariance function $C(t,s)=\delta(t-s)$).
+
+\paragraph*{(b)}
+
+
 
 \section*{Exercise 7}
 
 \paragraph*{(a)}
 
-The equation means
+Equation (a) means that
 $$
 X_t = \xi + \int_0^ts\,ds + 2\int_0^tdB_s = \xi + \frac{t^2}{2} + 2B_t.
 $$
@@ -141,7 +284,7 @@ This implies $\expval X_t = t^2/2$.
 
 \paragraph*{(b)}
 
-If we multiply both sides by $e^{\cos t}$, we get
+If we multiply both sides of equation (b) by $e^{\cos t}$, we get
 $$
 d(e^{\cos t}X_t) = e^{\cos t}\,dX_t - (\sin t)e^{\cos t}X_t\,dt = e^{\cos t}\,dB_t,
 $$
@@ -153,7 +296,7 @@ In particular $\expval X_t = 0$.
 
 \paragraph*{(c)}
 
-If we multiply both sides by $e^t$, we get
+If we multiply both sides of equation (c) by $e^t$, we get
 $$
 d(e^tX_t) = e^t\,dX_t + e^tX_t\,dt = e^tdt + e^tdB_t,
 $$
@@ -163,5 +306,67 @@ X_t & = \xi e^{-t} + e^{-t}\int_0^se^sds + e^{-t}\int_0^te^sdB_s
 = \xi e^{-t} + 1 - e^{-t} + e^{-t}\int_0^td(e^sB_s) - e^{-t}\int_0^t e^sB_s\,ds \\ & = e^{-t}(\xi -1) + 1 + B_t - e^{-t}\int_0^t e^sB_s\,ds.
 \end{align*}
 In particular $\expval X_t = 1$.
+
+\section*{Exercise 8}
+
+\paragraph*{(a)}
+
+By It\^o formula, it holds that
+$$
+dG_t = \frac{\alpha^2}{2}G_t\,dt - \alpha G_t\,dB_t + \frac{\alpha^2}{2}G_t\,dt = \alpha^2 G_t\,dt - \alpha G_t\,dB_t,
+$$
+and that
+\begin{align*}
+d(X_tG_t) & = X_t\,dG_t + G_t\,dX_t + dX_t\,dG_t \\ & = \alpha^2X_tG_t\,dt - \alpha X_tG_t\,dB_t + \frac{G_t}{X_t}\,dt + \alpha X_tG_t\,dB_t -\alpha^2X_tG_t\,dt = \frac{G_t}{X_t}\,dt.
+\end{align*}
+
+\paragraph*{(b)} By part (a), we have
+\begin{equation}
+dY_t = \frac{G_t}{X_t}\,dt \quad\Longrightarrow\quad Y_t = Y_0 + \int_0^t \frac{G_s}{X_s}\,ds = Y_0 + \int_0^t \frac{G_s^2}{Y_s}\,ds \quad\Longrightarrow\quad \frac{dY_t}{dt} = \frac{G_t^2}{Y_t}.
+\label{ex:8}
+\end{equation}
+
+\paragraph*{(c)}
+Equation (\ref{ex:8}) can be written as 
+$$
+\frac{d}{dt}\parr*{\frac{1}{2}Y_t^2} = G_t^2 \quad\Longrightarrow\quad Y_t^2 = Y_0^2 + 2\int_0^tG_s^2\,ds \quad\Longrightarrow\quad X_t^2 = \frac{X_0^2 + 2\int_0^tG_s^2\,ds}{G_t^2},
+$$
+which implies
+$$
+X_t = e^{\alpha B_t-\alpha^2t/2}\parq*{X_0^2+2\int_0^te^{\alpha^2s-2\alpha B_s}\,ds}^{1/2}.
+$$
+
+\section*{Exercise 9}
+
+Suppose that $X_t$ satisfies the SDE 
+\begin{equation}
+dX_t = b(t,X_t)\,dt + \sigma(t,X_t)*dW_t
+\label{ex9:*_int}
+\end{equation}
+and that this is equivalent to
+\begin{equation} 
+\label{ex9:int}
+dX_t = \alpha(t,X_t)\,dt + \beta(t,X_t)\,dW_t
+\end{equation}
+for some functions $\alpha$, $\beta$. The terms in the Riemann sums
+for (\ref{ex9:*_int}) is
+\begin{align}
+\Delta_j X & = b(t_j,X_j)\Delta_j t + \sigma(t_{j+1},X_{j+1})\Delta_j W \notag\\ & = b(t_j,X_j)\Delta_j t + \sigma(t_j,X_j)\Delta_jW+\partial_x\sigma(t_j,X_j)(\Delta_jX\Delta_jW) \notag\\ & = b(t_j,X_j)\Delta_j t + \sigma(t_j,X_j)\Delta_jW+\partial_x\sigma(t_j,X_j)
+\cdot\beta(t_j,X_j)\Delta_jt \notag
+\end{align}
+where we used (\ref{ex9:int}) in the last equality. This means
+\begin{equation}
+dX_t = [b(t,X_t)+\partial_x\sigma(t,X_t)
+\cdot\beta(t,X_t)]\,dt + \sigma(t,X_t)\,dW_t.
+\label{ex9:int2}
+\end{equation}
+Comparing (\ref{ex9:int2}) with (\ref{ex9:int}) we conclude that it must be
+$$
+\beta(t,X_t) = \sigma(t,X_t) \qquad\text{and}\qquad \alpha(t,X_t) = b(t,X_t)+\partial_x\sigma(t,X_t)\cdot \sigma(t,X_t),
+$$
+and therefore $X$ must satisfy
+$$
+dX_t = [b(t,X_t)+\partial_x\sigma(t,X_t)\cdot \sigma(t,X_t)]\,dt + \sigma(t,X_t)\,dW_t.
+$$
 
 \end{document}
