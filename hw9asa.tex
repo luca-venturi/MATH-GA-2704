@@ -266,11 +266,31 @@ The spectral form of the SDE is
 $$
 i\xi \hat{X}_\xi = -\alpha\hat{X}_\xi + \sigma\hat{\eta}_\xi \quad\Longrightarrow\quad \hat{X}_\xi = \frac{\sigma}{\alpha+i\xi}\cdot\hat{\eta}_\xi
 $$
-where $\hat{X}_\xi = dZ_X(\xi)$, $\hat{\eta}_\xi = dZ_\eta(\xi)$ ($\eta$ is a Gaussian process with mean $0$ and covariance function $C(t,s)=\delta(t-s)$).
+where $\hat{X}_\xi = dZ_X(\xi)$, $\hat{\eta}_\xi = dZ_\eta(\xi)$ ($\eta$ is a Gaussian process with mean $0$ and covariance function $C_\eta(t,s)=\delta(t-s)$).
+Since the covariance function of $\eta$ has the spectral representation
+$$
+C_\eta(t) = \delta(t) = \int e^{i\xi t}\frac{d\xi}{2\pi}
+$$
+then the covariance function of $X$ has the spectral representation
+$$
+C_X(t) = \expval\parq{X_t\overline{X}_0} = \int e^{i\xi t}\expval\parq*{\hat{X}_\xi\overline{\hat{X}}_\lambda} = \int e^{i\xi t}\frac{\sigma}{(\alpha+i\xi)}\frac{\sigma}{(\alpha-i\lambda)}\expval[\hat{\eta}_\xi\overline{\hat{\eta}}_\lambda] = \int e^{i\xi t}\frac{\sigma^2}{\alpha^2+\xi^2}\frac{d\xi}{2\pi},
+$$
+i.e. the spectral density of $X$ is 
+$$
+F_X(\xi) = \frac{\sigma^2}{2\pi(\alpha^2+\xi^2)}.
+$$
 
 \paragraph*{(b)}
 
-
+If $X$, $Y$ are independent then
+\begin{align*}
+C_{W}(t,s) & = \cos kt \, \cos ks \, C_X(t-s)  + \sin kt \, \sin ks \, C_Y(t-s) = \int e^{i\xi (t-s)}\cos k(t-s) \frac{\sigma^2}{\alpha^2+\xi^2}\frac{d\xi}{2\pi}
+\\ & = \int e^{i\xi (t-s)}(e^{ik(t-s)}+e^{-ik(t-s)}) \frac{\sigma^2}{\alpha^2+\xi^2}\frac{d\xi}{4\pi} \\ & = \int e^{i\xi (t-s)} \frac{\sigma^2}{4\pi}\parq*{\frac{1}{\alpha^2+(\xi-k)^2}+\frac{1}{\alpha^2+(\xi+k)^2}}\,d\xi,
+\end{align*}
+i.e. the spectral density of $W$ is 
+$$
+F_W(\xi) = \frac{\sigma^2}{4\pi}\parq*{\frac{1}{\alpha^2+(\xi-k)^2}+\frac{1}{\alpha^2+(\xi+k)^2}}.
+$$
 
 \section*{Exercise 7}
 
