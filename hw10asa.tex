@@ -1,0 +1,93 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[font={small},labelfont={sf,bf}]{caption}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=2cm,right=2cm,heightrounded, bindingoffset=5mm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{ex}[definition]{Example}
+\theoremstyle{remark}
+\newtheorem{rem}[definition]{Remark}
+\newtheorem{rem*}[definition]{}
+
+\newcommand*\mcup{\mathbin{\mathpalette\mcupinn\relax}}
+\newcommand*\mcupinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcup$}}}
+\newcommand*\mcap{\mathbin{\mathpalette\mcapinn\relax}}
+\newcommand*\mcapinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcap$}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\parr}{(}{)}
+\DeclarePairedDelimiter{\parq}{[}{]}
+\DeclarePairedDelimiter{\parqq}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\bra}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\prodscal}{\langle}{\rangle}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\expval}{\mathbb{E}}
+\DeclareMathOperator*{\varval}{\mathrm{Var}}
+\DeclareMathOperator*{\covval}{\mathrm{Cov}}
+
+\begin{document}
+
+\title{Applied Stochastic Analysis \\ Homework assignment 10}
+\author{Luca Venturi}
+\maketitle
+
+\section*{Exercise 1}
+
+\paragraph*{(a)}
+
+By applying It\^o formula, we have
+\begin{align*}
+I^{(3)}_t & \doteq \int_0^t\int_0^{s_1}\int_0^{s_2} dW_{s_3}\,dW_{s_2}\,dW_{s_1} = \int_0^t\int_0^{s_1}W_{s_2}\,dW_{s_2}\,dW_{s_1} \\
+& = \int_0^t\parq*{\int_0^{s_1}\,d\parr*{\frac{1}{2}W_{s_2}^2} - \frac{1}{2}\int_0^{s_1}ds_2}\,dW_{s_1} = \frac{1}{2}\int_0^t W_{s_1}^2\,dW_{s1} - \frac{1}{2}\int_0^t s_1\,dW_{s1} \\ & = \frac{1}{6}\int_0^td\parr*{W_{s_1}^3} - \frac{1}{2}\int_0^tW_{s_1}\,ds_1 - \frac{1}{2}\int_0^td(s_1W_{s_1}) + \frac{1}{2}\int_0^t W_{s_1}\,ds_1 \\ & = \frac{1}{6}W_t^3 -\frac{1}{2}tW_t .
+\end{align*}
+
+\paragraph*{(b)}
+
+We proceed by induction. For $k=3$ the equality holds due to part (a) and to 
+$$
+I^{(2)}_t = \frac{1}{2}W_t^2-\frac{1}{2}t,\qquad I^{(1)}_t = W_t.
+$$
+First of all, we notice that
+$$
+I_t^{(k+1)} = \int_0^tI_{s_1}^{(k)}\,dW_{s_1} \qquad\Longleftrightarrow\qquad dI_t^{(k+1)} = I_t^{(k)}\,dW_t.
+$$
+Then, if we suppose that the recursion formula holds for $k$, for $k+1$ we get
+\begin{align*}
+dI_t^{(k+1)} & = I_t^{(k)}\,dW_t = \frac{1}{k}\parr*{W_tI_t^{(k-1)}-tI_t^{(k-2)}}\,dW_t. 
+\end{align*}
+On the other hand
+\begin{align*}
+d\parq*{\frac{1}{k+1}\parr*{W_tI_t^{(k)}-tI_t^{(k-2)}}} & = \frac{1}{k+1}\parq*{d\parr*{W_tI_t^{(k)}}-d\parr*{tI_t^{(k-1)}}} \\ & = \frac{1}{k+1}\parq*{I_t^{(k)}dW_t+W_t\,dI_t^{(k)}+dW_t\,dI_t^{(k)}-tdI_t^{(k-1)}-I_t^{(k-1)}\,dt -dtdI_t^{(k-1)}} \\ & = 
+\end{align*}
+
+
+\end{document}
