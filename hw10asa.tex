@@ -82,12 +82,41 @@ I_t^{(k+1)} = \int_0^tI_{s_1}^{(k)}\,dW_{s_1} \qquad\Longleftrightarrow\qquad dI
 $$
 Then, if we suppose that the recursion formula holds for $k$, for $k+1$ we get
 \begin{align*}
-dI_t^{(k+1)} & = I_t^{(k)}\,dW_t = \frac{1}{k}\parr*{W_tI_t^{(k-1)}-tI_t^{(k-2)}}\,dW_t. 
+dI_t^{(k+1)} & = I_t^{(k)}\,dW_t = \frac{1}{k}\parr*{W_tI_t^{(k-1)}-tI_t^{(k-2)}}dW_t. 
 \end{align*}
 On the other hand
 \begin{align*}
-d\parq*{\frac{1}{k+1}\parr*{W_tI_t^{(k)}-tI_t^{(k-2)}}} & = \frac{1}{k+1}\parq*{d\parr*{W_tI_t^{(k)}}-d\parr*{tI_t^{(k-1)}}} \\ & = \frac{1}{k+1}\parq*{I_t^{(k)}dW_t+W_t\,dI_t^{(k)}+dW_t\,dI_t^{(k)}-tdI_t^{(k-1)}-I_t^{(k-1)}\,dt -dtdI_t^{(k-1)}} \\ & = 
+& d\parq*{\frac{1}{k+1}\parr*{W_tI_t^{(k)}-tI_t^{(k-2)}}} = \frac{1}{k+1}\parq*{d\parr*{W_tI_t^{(k)}}-d\parr*{tI_t^{(k-1)}}} = \\ &  = \frac{1}{k+1}\Big[I_t^{(k)}dW_t+W_t\,dI_t^{(k)}+dW_t\,dI_t^{(k)}-tdI_t^{(k-1)}-I_t^{(k-1)}\,dt -dtdI_t^{(k-1)}\Big] \\ & = \frac{1}{k+1}\parq*{I^{(k)}_tdW_t+W_tI^{(k-1)}_tdW_t + I^{(k-1)}_t(dW_t)^2-tI_t^{(k-2)}\,dW_t-I_t^{(k-1)}\,dt} \\ & = \frac{1}{k+1}\parq*{I^{(k)}_t+W_tI^{(k-1)}_t -tI_t^{(k-2)}}dW_t \\ & = \frac{1}{k+1}\parq*{\frac{1}{k}\parr*{W_tI^{(k-1)}_t -tI_t^{(k-2)}}+W_tI^{(k-1)}_t -tI_t^{(k-2)}}dW_t \\ & = \frac{1}{k+1}\parr*{1+\frac{1}{k}}\parr*{W_tI^{(k-1)}_t -tI_t^{(k-2)}}dW_t = \frac{1}{k}\parr*{W_tI_t^{(k-1)}-tI_t^{(k-2)}}dW_t.
 \end{align*}
+This shows that 
+$$
+dI_t^{(k+1)} = d\parq*{\frac{1}{k+1}\parr*{W_tI_t^{(k)}-tI_t^{(k-1)}}},
+$$
+which implies
+$$
+I_t^{(k+1)} = \frac{1}{k+1}\parr*{W_tI_t^{(k)}-tI_t^{(k-1)}},
+$$
+i.e. what we wanted to prove.
+
+\section*{Exercise 3}
+
+If we consider the SDE
+$$
+dX_t = \lambda X_t\,dt + \mu X_t\,dW_t,
+$$
+the Milstein scheme gives
+$$
+X_{n+1} = X_n + \lambda X_n \Delta t + \mu X_n\Delta W + \frac{1}{2}\mu^2 X_n ((\Delta W)^2-\Delta t),
+$$
+where $\Delta W$ is a r.v. $\sim N(0,\Delta t)$. Then
+\begin{align*}
+\expval\abs{X_{n+1}}^2 & = \expval\abs{X_n}^2\expval\parq*{\parr*{1+\lambda\Delta t+\mu\Delta W + \frac{1}{2}\mu^2((\Delta W)^2-\Delta t)}^2} \\ & = \expval\abs{X_n}^2\parq*{(1+\lambda \Delta t)^2 + \mu^2\Delta t + \frac{1}{4}\mu^4\expval\parq*{((\Delta W)^2-\Delta t))^2}} \\ & = \expval\abs{X_n}^2\parq*{(1+\lambda \Delta t)^2 + \mu^2\Delta t + \frac{1}{2}\mu^4(\Delta t)^2}.
+\end{align*}
+Therefore the stability region for the Milstein scheme is
+$$
+R_1 = \bra{\;(x,y) = (\lambda\Delta t,\mu^2\Delta t)\;:\;(1+x)^2 + y + \frac{1}{2}y^2 < 1\;}.
+$$
+We know that the stability region for the SDE is $R_2 = \bra{\;(x,y)\;:\;y<-2x\;}$ and the one for the EM scheme is $R_3 = \bra{\;(x,y)\;:\;(1+x)^2 + y < 1\;}$.
 
 
 \end{document}
