@@ -98,6 +98,40 @@ I_t^{(k+1)} = \frac{1}{k+1}\parr*{W_tI_t^{(k)}-tI_t^{(k-1)}},
 $$
 i.e. what we wanted to prove.
 
+\section*{Exercise 2}
+
+Let's consider the SDE
+$$
+dX_t = b(X_t)\,dt + \sigma(X_t)\,dW_t.
+$$
+We know that the Milstein scheme has order 1 and it's based on the expansion:
+$$
+X_t = X_0 + b(X_0)\int_0^tds + \sigma(X_0)\int_0^t\,dW_s + (\sigma\sigma')(X_0)\int_0^t\frac{1}{2}\parq*{d(W^2_s) - ds}  + R_1,
+$$
+where
+\begin{align*}
+R_1 & = \int_0^t\int_0^s\mathcal{L}_0b(X_z)\,dzds + \int_0^t\int_0^s\mathcal{L}_0\sigma(X_z)\,dzdW_s + \int_0^t\int_0^s\mathcal{L}_1b(X_z)\,dW_zds \\ &  + \int_0^t\int_0^s\int_0^z\mathcal{L}_1\mathcal{L}_1\sigma(X_u)\,dW_udW_zdW_s + \int_0^t\int_0^s\int_0^z\mathcal{L}_0\mathcal{L}_1\sigma(X_u)\,dudW_zdW_s 
+\end{align*}
+(here $\mathcal{L}_0=b\partial_x+(1/2)\sigma^2\partial^2_{xx}$ and $\mathcal{L}_1=\sigma\partial_x$). Applying the rule
+$$
+f(X_t) = f(X_0) + \int_0^t\mathcal{L}_0f(X_s)\,ds + \int_0^t\mathcal{L}_1f(X_s)\,dW_s
+$$
+to the first four components of $R_1$, we get the new expansion:
+\begin{align*}
+X_t & = X_0 + b(X_0)\int_0^tds + \sigma(X_0)\int_0^t\,dW_s + (\sigma\sigma')(X_0)\int_0^t\frac{1}{2}\parq*{d(W^2_s) - ds} \\ & + \frac{1}{2}\parq*{(bb')(X_0) + \frac{1}{2}(\sigma^2b'')(X_0)}\int_0^td(s^2) + (\sigma b')(X_0)\int_0^t\int_0^sdW_zds \\ & + \parq*{(b\sigma')(X_0) +\frac{1}{2}(\sigma^2\sigma'')(X_0)}\int_0^t\parq*{d(sW_s)-W_sds} \\ & + \frac{1}{2}\sigma(X_0)\parq*{(\sigma')^2(X_0)+(\sigma\sigma'')(X_0)}\int_0^t\parq*{\frac{1}{3}d(W_s^3)-d(sW_s)} + R_2
+\end{align*}
+for some remainder term $R_2$ (we used the result from exercise 1.a for the last term). From this expansion we get the following discrete scheme:
+\begin{align*}
+X_{n+1} & = X_n + b(X_n)\Delta t + \sigma(X_n)\Delta W + \frac{1}{2}(\sigma\sigma')(X_n)((\Delta W)^2-\Delta t) \\ & + \frac{1}{2}\parq*{(bb')(X_n) + \frac{1}{2}(\sigma^2b'')(X_n)}(\Delta t)^2 \\ & + \parq*{(b\sigma')(X_n) +\frac{1}{2}(\sigma^2\sigma'')(X_n)}(\Delta t\Delta W -\Delta Z)  + (\sigma b')(X_n)\Delta Z \\ & + \frac{1}{2}\sigma(X_n)\parq*{(\sigma')^2(X_n)+(\sigma\sigma'')(X_n)}\parr*{\frac{1}{3}(\Delta W)^3-\Delta W\Delta t},
+\end{align*} 
+where $\Delta W$ is a r.v. $\sim N(0,\Delta t)$ and $\Delta Z$ is a r.v. $\sim\int_0^{\Delta t}\int_0^sdW_zds\sim N(0,(\Delta t)^3/3)$. In particular $\expval\parq{\Delta W\Delta Z} = (\Delta t)^2/2$, so, at every step we must compute an instance of the 2d r.v. $(\Delta W, \Delta Z)\sim N(\mathbf{0},\Sigma)$, where
+$$
+\Sigma = \left(\begin{matrix}
+\Delta t & (\Delta t)^2/2 \\ (\Delta t)^2/2 & (\Delta t)^3/3
+\end{matrix}\right)
+$$
+(we can do this using the method based on Choleski decomposition of $\Sigma$ for example). We expect this method to have strong order of convergence 1.5 cause we derived every term in the remainder of the Milstein scheme, which has order 1, such that now in the remainder term $R_2$ we only have triple (or quadruple) (stochastic) integrals, but none of the type $dW_tdW_sdW_z$.
+
 \section*{Exercise 3}
 
 If we consider the SDE

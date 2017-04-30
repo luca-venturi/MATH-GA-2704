@@ -68,15 +68,17 @@ def s_conv_error(lam, mu, end_time, dt, met, M):
 	err_mean = np.zeros((N))
 	if met == 0:
 		for i in range(M):
-			err_mean += (em(lam, mu, end_time, dt) - real_sol(lam, mu, end_time, dt))**2
-	elif met == 1: 
+			real_s, real_s_mean = real_sol(lam, mu, end_time, dt)
+			err_mean += (em(lam, mu, end_time, dt) - real_s)**2
+	elif met == 1:
 		for i in range(M):
-			err_mean += (mil(lam, mu, end_time, dt) - real_sol(lam, mu, end_time, dt))**2
+			real_s, real_s_mean = real_sol(lam, mu, end_time, dt)
+			err_mean += (mil(lam, mu, end_time, dt) - real_s)**2
 	err_mean /= M
 		
-	return np.amax(err_mean)
+	return np.mean(err_mean)
 
-# weak convergence of EM scheme
+# parameters setting
 
 lam = 2.
 mu = 1.
@@ -84,18 +86,31 @@ T = 1.
 n = 5
 dt = [T/(4**i) for i in range(2,n+2)]
 M = 1000
+'''
+# weak convergence of EM scheme
 
 w_conv_em = np.zeros((n))
 for i in range(n):
 	w_conv_em[i] = w_conv_error(lam, mu, T, dt[i], 0, M)
 
-plt.plot(np.log2(dt), np.log2(w_conv_em))
+alpha = np.polyfit(np.log2(dt), np.log2(w_conv_em), 1)
+
+plt.plot(np.log2(dt), np.log2(w_conv_em), np.log2(dt), alpha[0]*np.log2(dt) + alpha[1])
 plt.show()
 
+print "\nEuler-Maruyama: weak convergence: alpha = ", alpha[0]
+'''
+# strong convergence of EM scheme
 
+s_conv_em = np.zeros((n))
+for i in range(n):
+	s_conv_em[i] = s_conv_error(lam, mu, T, dt[i], 0, M)
+	print i, "-th iteration done\n"
 
+alpha = np.polyfit(np.log2(dt), np.log2(s_conv_em), 1)
 
+plt.plot(np.log2(dt), np.log2(s_conv_em), np.log2(dt), alpha[0]*np.log2(dt) + alpha[1])
+plt.show()
 
+print "\nEuler-Maruyama: strong convergence: alpha = ", alpha[0]
 
-
-	
