@@ -152,5 +152,63 @@ R_1 = \bra{\;(x,y) = (\lambda\Delta t,\mu^2\Delta t)\;:\;(1+x)^2 + y + \frac{1}{
 $$
 We know that the stability region for the SDE is $R_2 = \bra{\;(x,y)\;:\;y<-2x\;}$ and the one for the EM scheme is $R_3 = \bra{\;(x,y)\;:\;(1+x)^2 + y < 1\;}$.
 
+\section*{Exercise 4}
+
+\paragraph*{(a)}
+
+We implemented the Euler-Maruyama scheme for the SDE:
+\begin{equation}\label{eq:conv_num}
+dX_t = 2X_t\,dt + X_t\,dW_t, \qquad X_0 = 1.
+\end{equation}
+In Figure (\ref{figure:ex10_em}), we plot (in logarithmic scale) the error for weak and strong convergence for $T=1$ and $\Delta t = 4^{-i}$, $i=2,\dots,6$, vs the best-fit line.
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[c]{.47\textwidth}
+\includegraphics[width=\textwidth,
+keepaspectratio]{ex10_em_w.png}
+\end{minipage}
+\hspace{4mm}
+\begin{minipage}[c]{.47\textwidth}
+\includegraphics[width=\textwidth,
+keepaspectratio]{ex10_em_s.png}
+\end{minipage}
+\caption{ \label{figure:ex10_em} Weak (left) and strong (right) convergence of the Euler-Maruyama method for equation (\ref{eq:conv_num}).}
+\end{figure}
+The empirical values of $\alpha$ (i.e. the order of convergence) are $\alpha = 0.84$ and $\alpha = 0.48$ for weak and strong convergence respectively.
+
+\paragraph*{(b)}
+
+We implemented the Milstein scheme for the SDE (\ref{eq:conv_num}).
+In Figure (\ref{figure:ex10_mil}), we plot (in logarithmic scale) the error for weak and strong convergence for $T=1$ and $\Delta t = 4^{-i}$, $i=2,\dots,6$, vs the best-fit line.
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[c]{.47\textwidth}
+\includegraphics[width=\textwidth,
+keepaspectratio]{ex10_mil_w.png}
+\end{minipage}
+\hspace{4mm}
+\begin{minipage}[c]{.47\textwidth}
+\includegraphics[width=\textwidth,
+keepaspectratio]{ex10_mil_s.png}
+\end{minipage}
+\caption{ \label{figure:ex10_mil} Weak (left) and strong (right) convergence of the Euler-Maruyama method for equation (\ref{eq:conv_num}).}
+\end{figure}
+The empirical values of $\alpha$ (i.e. the order of convergence) are $\alpha = 0.95$ and $\alpha = 0.92$ for weak and strong convergence respectively.
+
+\paragraph*{(c)}
+
+We implemented the Milstein scheme for the SDE:
+\begin{equation}\label{eq:mean_square}
+dX_t = -3X_t\,dt + \sqrt{3}X_t\,dW_t, \qquad X_0 = 1
+\end{equation}
+and we approximated $\lim_{t\to\infty}\expval X_t^2\simeq\expval X_{10}^2$. We found that for $\Delta_1 t = 0.4$ the scheme is unstable ($\expval X_{10}^2\simeq70902$) while for $\Delta_0 t = 0.2$ the scheme is stable ($\expval X_{10}^2\simeq1.012\cdot10^{-20}$).
+
+\paragraph*{(d)}
+
+We implemented the Milstein scheme for the SDE:
+\begin{equation}\label{eq:prob}
+dX_t = -\frac{1}{2}X_t\,dt + \sqrt{6}X_t\,dW_t, \qquad X_0 = 1.
+\end{equation}
+and we approximated $P\bra*{\lim_{t\to\infty}\expval \abs{X_t}=0}\simeq P\bra*{\abs{X_{10}}>10^{-5}}$. We found that for $\Delta_1 t = 0.4$ the scheme is unstable ($ P\bra*{\abs{X_{10}}>10^{-5}}\simeq0.722$) while for $\Delta_0 t = 0.2$ the scheme is stable ($P\bra*{\abs{X_{10}}>10^{-5}}\simeq0.999$).
 
 \end{document}
