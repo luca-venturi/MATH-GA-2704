@@ -2,6 +2,8 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 
+### (a) ###
+
 # we numerically solve the SDE dX = 2Xdt + XdW
 
 # Euler-Maruyama scheme
@@ -81,8 +83,6 @@ def s_conv_error(lam, mu, end_time, dt, met, M):
 	err_mean /= M
 		
 	return np.amax(err_mean)
-
-### (a) ###
 
 # parameters setting
 
@@ -182,7 +182,7 @@ for i in range(n):
 	p = 0.
 	for j in range(M):
 		x, x_real = mil(lam, mu, T, dt[i])
-		p += (x[-1] < eps)
+		p += (np.absolute(x[-1]) < eps)
 	p /= M
 	print "\ndt = ", dt[i], "-> p = ", p, "\n"
 

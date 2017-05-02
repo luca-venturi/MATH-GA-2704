@@ -1,0 +1,156 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[font={small},labelfont={sf,bf}]{caption}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{afterpage}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=2cm,right=2cm,heightrounded, bindingoffset=5mm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{prop}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{cor}[definition]{Corollary}
+\newtheorem{ex}[definition]{Example}
+\theoremstyle{remark}
+\newtheorem{rem}[definition]{Remark}
+\newtheorem{rem*}[definition]{}
+
+\newcommand*\mcup{\mathbin{\mathpalette\mcupinn\relax}}
+\newcommand*\mcupinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcup$}}}
+\newcommand*\mcap{\mathbin{\mathpalette\mcapinn\relax}}
+\newcommand*\mcapinn[2]{\vcenter{\hbox{$\mathsurround=0pt
+  \ifx\displaystyle#1\textstyle\else#1\fi\bigcap$}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\parr}{(}{)}
+\DeclarePairedDelimiter{\parq}{[}{]}
+\DeclarePairedDelimiter{\parqq}{\llbracket}{\rrbracket}
+\DeclarePairedDelimiter{\bra}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\prodscal}{\langle}{\rangle}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\expval}{\mathbb{E}}
+\DeclareMathOperator*{\varval}{\mathrm{Var}}
+\DeclareMathOperator*{\covval}{\mathrm{Cov}}
+
+\begin{document}
+
+\title{Applied Stochastic Analysis \\ Homework assignment 11}
+\author{Luca Venturi}
+\maketitle
+
+\section*{Exercise 1}
+
+\paragraph*{(a)}
+
+The corresponding Fokker-Plank equations are
+\begin{align*}
+\rho_t & = -\partial_x(\lambda x\rho) + \partial^2_{xx}\parr*{\frac{1}{2}\sigma^2x^2\rho} \\ & = (\sigma^2-\lambda)\rho + (2\sigma^2 -\lambda)x\rho_x + \frac{1}{2}\sigma^2x^2\rho_{xx}.
+\end{align*}
+
+\section*{Exercise 3}
+
+\paragraph*{(a)}
+
+$X_t$ should satisfy the SDE
+$$
+dX_t = -v\mathbbm{1}_{\bra{X_t\in[0,d]}}\,dt + \sigma\,dW_t, \qquad X_t \in [0,L].
+$$
+
+\paragraph*{(b)}
+
+$X_t$ should satisfy the SDE
+$$
+dX_t = -v\mathbbm{1}_{\bra{X_t\in[0,d]}}\,dt + \sigma\,dW_t, \qquad X_t \in [0,L].
+$$
+
+\section*{Exercise 4}
+
+\paragraph*{(a)}
+
+Be $V_t = \dot{X_t}$. Then we can write the Langevin equation as a first order system:
+$$
+\begin{cases} dX_t = V_t\,dt \\ dV_t = -\frac{1}{m}(\gamma V_t + \nabla U(X_t))\,dt + \frac{1}{m}\sqrt{2}\sigma\,dW_t \end{cases}
+$$
+i.e.
+$$
+d\mathbf{X}_t = \mathbf{b}(\mathbf{X}_t)\,dt + \Sigma\,d\mathbf{W}_t,
+$$
+where
+$$
+\mathbf{X}_t = \left(\begin{matrix}
+X_t \\ V_t
+\end{matrix}\right), \quad \mathbf{b}(\mathbf{X}_t) = \left(\begin{matrix}
+V_t \\ -\frac{1}{m}(\gamma V_t + \nabla U(X_t))
+\end{matrix}\right) \quad \text{and} \quad \Sigma = \left(\begin{matrix}
+0 & 0 \\ \frac{1}{m}\sqrt{2}\sigma & 0
+\end{matrix}\right).
+$$
+
+\paragraph*{(b)}
+
+The corresponding Fokker-Plank equation is
+\begin{equation}
+\rho_t = \mathcal{L}^*_{(x,v)} \rho = -\nabla_{(x,v)} \cdot (\mathbf{b}\rho) + \nabla^2_{(x,v)}:(A\rho)\label{ex4:1d_fp}
+\end{equation}
+where
+$$
+A = \frac{1}{2}\Sigma\Sigma^T = \left(\begin{matrix}
+0 & 0 \\ 0 & \frac{\sigma^2}{m^2}
+\end{matrix}\right).
+$$
+Equation (\ref{ex4:1d_fp}) can be written more explicitly as
+\begin{equation}
+\rho_t = -v\rho_x + \frac{1}{m}[\rho_v(\gamma v + \nabla U(x))+ \gamma\rho] + \frac{\sigma^2}{m^2}\rho_{vv}
+\label{ex4:1d_fp:2}
+\end{equation}
+
+\paragraph*{(c)}
+
+If $\rho = \rho_s(x,v) = Z^{-1}e^{-\beta H(x,v)}$, we have
+\begin{align*}
+-v\rho_x & = -v(-\beta H_x)\rho = \beta v \nabla U(x)\rho,
+\\ \frac{1}{m}\rho_v(\gamma v + \nabla U(x)) & = -\frac{\beta}{m}H_v(\gamma v + \nabla U(x))\rho = -\beta v\nabla U(x)\rho - \beta\gamma v^2\rho,
+\\ \frac{\sigma^2}{m^2}\rho_{vv} & = \frac{\sigma^2}{m^2}(\rho H_v)_v = -\beta\frac{\sigma^2}{m^2} H_{vv} +\frac{\sigma^2}{m^2}\beta^2(H_v)^2 = \frac{\gamma}{m}\rho + \beta\gamma v^2\rho.
+\end{align*}
+Then, using the above equations, (\ref{ex4:1d_fp:2}) gives
+$$
+\rho_t = \mathcal{L}^*_{(x,v)} \rho = \beta v \nabla U(x)\rho -\beta v\nabla U(x)\rho - \beta\gamma v^2\rho + \frac{\gamma}{m}\rho + \frac{\gamma}{m}\rho + \beta\gamma v^2\rho = 0.
+$$
+
+\paragraph*{(d)}
+
+The steady-state flux is 
+\begin{align*}
+\mathbf{j}_s = \mathbf{b}\rho - \nabla_{(x,v)}\cdot(A\rho) = \rho\left(\begin{matrix}
+v \\ -\frac{1}{m}(\gamma v + \nabla U(x))
+\end{matrix}\right) - \rho_v\left(\begin{matrix}
+0 \\ \frac{\sigma^2}{m^2}
+\end{matrix}\right).
+\end{align*}
+From this expression we see that $\mathbf{j}_s$ is not zero in general and neither if $\rho = \rho_s(x,v) = Z^{-1}e^{-\beta H(x,v)}$.
+
+\paragraph*{(e)} fare
+
+\end{document}
